@@ -1,6 +1,7 @@
 const payments = require("../models/paymentModel.js");
 const athletes = require("../models/athleteModel.js");
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
+const nodemailer = require("nodemailer");
 const date = new Date();
 
 const paymentController = {
@@ -71,16 +72,16 @@ const paymentController = {
                     { year: date.getFullYear() }
                 ]
             }).count();
-            
+
             const paid = await payments.find({
                 $and: [
                     { month: date.getMonth() + 1 },
                     { year: date.getFullYear() },
-                    { paid: { $eq: true} }
+                    { paid: { $eq: true } }
                 ]
             }).count();
 
-            if(all === 0)
+            if (all === 0)
                 res.status(200).json(0);
 
             const percentage = paid / all;
@@ -91,7 +92,8 @@ const paymentController = {
     },
     payMonth: async (req, res) => {
         try {
-            const { id, aid, amount, month, year } = req.body;
+            const { id, aid, amount, month, year, email } = req.body;
+
             const payment = await stripe.paymentIntents.create({
                 amount,
                 currency: "USD",
@@ -99,13 +101,40 @@ const paymentController = {
                 payment_method: id,
                 confirm: true
             });
+
             await payments.findOneAndUpdate({
                 $and: [
                     { month: month },
                     { year: year },
                     { aid: aid }
                 ]
-            },{ paid: true});
+            }, { paid: true });
+
+            const transporter = nodemailer.createTransport({
+                service: "gmail",
+                auth: {
+                    user: "teo6waterpolo@gmail.com",
+                    pass: "bouihmqlnnhyphsy"
+                }
+            });
+
+            const mailOptions = {
+                from: "teo6waterpolo@gmail.com",
+                to: email,
+                subject: "Payment from Teamanager",
+                html: "<h1>Payment for month " + month + " and year " + year + "</h1>" +
+                    "<p>Thank you for your purchase</p>"
+            };
+
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
+            });
+
+
             res.status(200).json(payment);
         } catch (error) {
             return res.status(500).json({ msg: error.message });
@@ -114,7 +143,7 @@ const paymentController = {
     getAthletePayments: async (req, res) => {
         try {
             const id = req.query.id;
-            const results = await payments.find({aid: id});
+            const results = await payments.find({ aid: id });
             res.status(200).json(results);
         } catch (error) {
             return res.status(500).json({ msg: error.message });

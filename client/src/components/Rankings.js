@@ -1,16 +1,20 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { motion } from "framer-motion";
+import "../css/Rankings.css";
 import { useSelector } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBullseye, faUser, faIdCard, faMedal } from "@fortawesome/free-solid-svg-icons";
 
 export const Rankings = () => {
     const [ranking, setRanking] = useState([]);
     const [goalRanking, setGoalRanking] = useState([]);
     const token = useSelector(state => state.token);
     const [choice, setChoice] = useState("attendances");
-    
+
     const handleChange = (event) => {
         const sortRank = [...ranking];
-        
+
         if (event.target.value === "attendances") {
             sortRank.sort((a, b) => b.attendances - a.attendances);
         } else {
@@ -41,7 +45,7 @@ export const Rankings = () => {
     }, []);
 
     return (
-        <div>
+        <div className="rank-container">
             <label>
                 Choose how you want to rank the athletes<br />
                 <select onChange={handleChange}>
@@ -50,16 +54,34 @@ export const Rankings = () => {
                     <option value="sprints">By Sprints</option>
                 </select>
             </label>
-            <div>
+            <div className="list">
                 {
                     choice === "goals" ? goalRanking.length !== 0 ?
-                        goalRanking.map((athlete, i) => <p key={i}>{athlete._id.fullName} &nbsp;&nbsp; {choice}: &nbsp;&nbsp; {athlete.totalGoals}</p>)
+                        goalRanking.map((athlete, i) =>
+                            <motion.div
+                                className="card"
+                                key={i}
+                                initial={{ opacity: 0, translateX: -50 }}
+                                animate={{ opacity: 1, translateX: 0 }}
+                                transition={{ duration: 0.5, delay: i * 0.1 }}
+                            >
+                                {i + 1}. &nbsp;
+                                <div className="avatar">{athlete._id.fullName.split(" ").map((word) => word.charAt(0).toUpperCase())}</div>
+                                <div className="content">
+                                    <p className="name"><FontAwesomeIcon icon={faUser} />&nbsp;{athlete._id.fullName}</p>
+                                    <p><FontAwesomeIcon icon={faIdCard} /> &nbsp;{athlete._id.koeCode}</p>
+                                    <p><FontAwesomeIcon icon={faBullseye} /> &nbsp;{athlete.totalGoals}</p>
+                                </div>
+                                <FontAwesomeIcon className="medal" icon={faMedal} />
+                            </motion.div>)
+
                         : <p>Athletes haven't scored yet</p> :
-                    choice === "attendances" ? ranking.length !== 0 ?
-                        ranking.map((athlete, i) => <p key={i}>{athlete.fullName} &nbsp;&nbsp; {choice}: &nbsp;&nbsp; {athlete.attendances}</p>)  
-                        : <p>No athletes</p> : ranking.length !== 0 ?
-                                ranking.map((athlete, i) => <p key={i}>{athlete.fullName} &nbsp;&nbsp; {choice}: &nbsp;&nbsp; {athlete.avgSprint}</p>)
-                        : <p>No athletes</p>
+                        choice === "attendances" ? ranking.length !== 0 ?
+                            ranking.map((athlete, i) =>
+                                <div key={i}>{athlete.fullName} &nbsp;&nbsp; {choice}: &nbsp; {athlete.attendances}</div>)
+                            : <div>No athletes</div> : ranking.length !== 0 ?
+                            ranking.map((athlete, i) => <div key={i}>{athlete.fullName} &nbsp;&nbsp; {choice}: &nbsp; {athlete.avgSprint}</div>)
+                            : <p>No athletes</p>
                 }
             </div>
         </div>

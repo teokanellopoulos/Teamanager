@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^6.2.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@stripe/react-stripe-js": "^1.10.0",
     "@stripe/stripe-js": "^1.35.0",
     "@testing-library/jest-dom": "^5.16.4",
@@ -11,6 +13,7 @@
     "axios": "^0.27.2",
     "chart.js": "^3.9.1",
     "date-fns": "^2.29.1",
+    "framer-motion": "^7.4.0",
     "react": "^18.1.0",
     "react-big-calendar": "^1.5.0",
     "react-chartjs-2": "^4.3.1",

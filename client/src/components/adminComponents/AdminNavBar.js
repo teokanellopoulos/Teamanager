@@ -1,18 +1,16 @@
 import { NavLink } from 'react-router-dom';
-import { useSelector } from "react-redux";
 import axios from 'axios';
 import "../../css/admin/AdminNavBar.css";
 import { useState } from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark, faBars } from "@fortawesome/free-solid-svg-icons";
 
 export const AdminNavBar = () => {
-    const auth = useSelector(state => state.auth);
     const [click, setClick] = useState(false);
 
     const handleClick = () => {
         setClick(!click);
     }
-
-    const { isLogged } = auth;
 
     const handleLogout = async () => {
         try {
@@ -38,7 +36,7 @@ export const AdminNavBar = () => {
                     <li className="nav-item"><NavLink className='nav-links' to="/logout" onClick={handleLogout}>Logout</NavLink></li>
                 </ul>
                 <div className="nav-icon" onClick={handleClick}>
-                    <i className={click ? "fas fa-times" : "fas fa-bars"}></i>
+                    {click ? <FontAwesomeIcon icon={ faXmark } /> : <FontAwesomeIcon icon={ faBars } />}
                 </div>
             </div>
         </nav>

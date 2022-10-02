@@ -6,9 +6,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 export const PaymentForm = () => {
     const stripe = useStripe();
     const elements = useElements();
+    const auth = useSelector(state => state.auth);
     const token = useSelector(state => state.token);
     const location = useLocation();
     const navigate = useNavigate();
+    const { email } = auth.athlete;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -23,6 +25,7 @@ export const PaymentForm = () => {
                 await axios.post("payment/payMonth", {
                     amount: 3000,
                     id,
+                    email,
                     aid: location.state.aid,
                     month: parseInt(location.state.month),
                     year: parseInt(location.state.year)
@@ -34,7 +37,7 @@ export const PaymentForm = () => {
                 console.log(error);
             }
         } else {
-            console.log("Hello" + error.message);
+            console.log("Hello " + error.message);
         }
     }
 

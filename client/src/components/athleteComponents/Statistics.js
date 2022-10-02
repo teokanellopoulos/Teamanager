@@ -6,9 +6,9 @@ import axios from 'axios';
 export const Statistics = () => {
     const auth = useSelector(state => state.auth);
     const token = useSelector(state => state.token);
-    const { athlete } = auth;
+    const { koeCode, attendances, avgSprint } = auth.athlete;
     const [goals, setGoals] = useState(0);
-    const koeCode = athlete.koeCode;
+    console.log(koeCode)
 
     useEffect(() => {
         const getGoals = async () => {
@@ -25,13 +25,13 @@ export const Statistics = () => {
         }
         getGoals();
         // eslint-disable-next-line
-    }, [auth.athlete.koeCode]);
+    }, [koeCode]);
 
     return (
         <div>
             <p>Your total goals are {goals}</p>
-            <p>Your total attendances are {athlete.attendances}</p>
-            <p>Your average sprint is {athlete.avgSprint}s</p>
+            <p>Your total attendances are {attendances}</p>
+            <p>Your average sprint is {avgSprint}s</p>
             <Rankings />
         </div>
     )
