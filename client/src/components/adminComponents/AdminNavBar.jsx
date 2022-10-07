@@ -21,11 +21,11 @@ export const AdminNavBar = () => {
             window.location.href = "/";
         }
     }
-
+    
     return (
         <nav className='admin-navbar'>
             <div className="nav-container">
-                <NavLink to="/" className="nav-logo"><img src='/logo.png'></img></NavLink>
+                <NavLink to="/" className="nav-logo"><img src='/logo.png' alt=''></img></NavLink>
                 <ul className={click ? "nav-menu active" : "nav-menu"}>
                     <li className="nav-item"><NavLink className='nav-links' onClick={handleClick} to="/">Dashboard</NavLink></li>
                     <li className="nav-item"><NavLink className='nav-links' onClick={handleClick} to="/rankings">Rankings</NavLink></li>
@@ -33,7 +33,7 @@ export const AdminNavBar = () => {
                     <li className="nav-item"><NavLink className='nav-links' onClick={handleClick} to="/viewPayments">View payments</NavLink></li>
                     <li className="nav-item"><NavLink className='nav-links' onClick={handleClick} to="/viewMatches">View matches</NavLink></li>
                     <li className="nav-item"><NavLink className='nav-links' onClick={handleClick} to="/viewAthletesInfo">View athletes info</NavLink></li>
-                    <li className="nav-item"><NavLink className='nav-links' to="/logout" onClick={handleLogout}>Logout</NavLink></li>
+                    <li className="nav-item"><NavLink className='nav-links' style={{color: "red"}} to="/" onClick={handleLogout}>Logout</NavLink></li>
                 </ul>
                 <div className="nav-icon" onClick={handleClick}>
                     {click ? <FontAwesomeIcon icon={ faXmark } /> : <FontAwesomeIcon icon={ faBars } />}

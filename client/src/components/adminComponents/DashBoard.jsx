@@ -1,6 +1,6 @@
-import { LineChart } from "./LineChart.js";
-import { PaymentsProgressBar } from "./PaymentsProgressBar.js";
-import VictoriesProgressBar from "./VictoriesProgressBar.js";
+import { LineChart } from "./LineChart.jsx";
+import { PaymentsProgressBar } from "./PaymentsProgressBar.jsx";
+import VictoriesProgressBar from "./VictoriesProgressBar.jsx";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "../../css/admin/DashBoard.css";

@@ -26,7 +26,7 @@ export const PaymentForm = () => {
                     amount: 3000,
                     id,
                     email,
-                    aid: location.state.aid,
+                    koeCode: location.state.koeCode,
                     month: parseInt(location.state.month),
                     year: parseInt(location.state.year)
                 }, {

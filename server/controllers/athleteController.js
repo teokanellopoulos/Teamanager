@@ -1,5 +1,6 @@
 const athletes = require("../models/athleteModel.js");
 const payments = require("../models/paymentModel.js");
+const attendances = require("../models/attendanceModel.js");
 const jwt = require("jsonwebtoken");
 const date = new Date();
 const { google } = require("googleapis");
@@ -33,13 +34,14 @@ const athleteController = {
             }
 
             const ath = await athletes.findOne();
+            
             if(!ath){
                 const newAthlete = new athletes({
                     fullName, yob, email, password, phone, role: 1, koeCode
                 });
     
                 await newAthlete.save();
-                res.status(200).json({msg: "Registration complete"});
+                return res.status(200).json({msg: "Registration complete"});
             }
 
             const athlete = await athletes.findOne({email});
@@ -55,10 +57,18 @@ const athleteController = {
             
             for(let i = date.getMonth() + 1 ; i <= 12; i++){
                 let newPayment = new payments({
-                    fullName, koeCode, month: i, year: date.getFullYear(), aid: newAthlete._id,
+                    fullName, koeCode, month: i, year: date.getFullYear()
                 });
 
                 await newPayment.save();
+            }
+
+            for(let i = date.getMonth() + 1 ; i <= 12; i++){
+                let newAttendance = new attendances({
+                    fullName, koeCode, month: i, year: date.getFullYear()
+                });
+
+                await newAttendance.save();
             }
             
             res.status(200).json({msg: "Registration complete"});
@@ -165,15 +175,6 @@ const athleteController = {
             return res.status(500).json({msg: error.message});
         }
     },
-    deleteAthlete: async (req, res) => {
-        try {
-            await athletes.findByIdAndDelete({_id: req.params.id});
-
-            res.status(200).json({msg: "Athlete deleted"});
-        } catch (error) {
-            return res.status(500).json({msg: error.message});
-        }
-    },
     googleLogin: async (req, res) => {
         try {
             const { tokenId } = req.body;
@@ -203,7 +204,7 @@ const athleteController = {
     },
     updateAthlete: async (req, res) => {
         try {
-            const { _id, attendances, lastSprint } = req.body.updatedAthlete;
+            const { _id, lastSprint } = req.body.updatedAthlete;
 
             const athlete = await athletes.findOne({_id});
 
@@ -214,14 +215,11 @@ const athleteController = {
             }else
                 avgSprint = lastSprint;
             
-            if(attendances < 0)
-                return res.status(400).json({msg: "Attendances must be a positive number"});
-            
             if(lastSprint < 0)
                 return res.status(400).json({msg: "Last sprint must be a positive number"});
 
             await athletes.findOneAndUpdate({_id: _id}, {
-                attendances, avgSprint, lastSprint
+                avgSprint, lastSprint
             });
 
             res.status(200).json({msg: "Athlete updated"});
@@ -237,7 +235,7 @@ const validateEmail = (email) => {
       .match(
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       );
-};
+}
 
 const createAccessToken = (payload) => {
     return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "15m"});

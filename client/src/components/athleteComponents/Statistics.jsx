@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from "react-redux";
-import { Rankings } from '../Rankings.js';
+import { Rankings } from '../Rankings.jsx';
 import axios from 'axios';
 
 export const Statistics = () => {

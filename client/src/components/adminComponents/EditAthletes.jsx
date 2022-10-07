@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { EditAthlete } from "./EditAthlete";
+import { EditAthlete } from "./EditAthlete.jsx";
 
 export const EditAthletes = () => {
     const [athletes, setAthletes] = useState([]);
+    const [attendances, setAttendances] = useState([]);
     const token = useSelector(state => state.token);
+    const date = new Date();
 
     useEffect(() => {
         const getAthletes = async () => {
@@ -14,10 +16,20 @@ export const EditAthletes = () => {
                     headers: { Authorization: token }
                 });
 
+                const att = await axios.get("/attendance/getMonthAttendances", {
+                    params: {
+                        month: date.getMonth() + 1,
+                        year: date.getFullYear()
+                    },
+                    headers: { Authorization: token }
+                });
+
                 const results = res.data.sort((a, b) => a.fullName.localeCompare(b.fullName));
                 setAthletes(results);
+                setAttendances(att.data);
             } catch (error) {
                 setAthletes("An error has occured");
+                console.log(error)
             }
         }
         getAthletes();
@@ -26,7 +38,12 @@ export const EditAthletes = () => {
 
     return (
         <div>
-            {athletes.map((athlete, i) => <EditAthlete key={i} athlete={athlete} />)}
+            {athletes.map((athlete, i) =>
+                <EditAthlete
+                    key={i}
+                    attendance={attendances.find((attendance) => attendance.koeCode === athlete.koeCode)}
+                    athlete={athlete}
+                />)}
         </div>
     )
 }

@@ -10,15 +10,15 @@ export const Payments = () => {
     const { athlete } = auth;
     const navigate = useNavigate();
     const [checked, setChecked] = useState(false);
-    const id = athlete._id;
+    const koeCode = athlete.koeCode;
 
     useEffect(() => {
         const getMatches = async () => {
-            if (id) {
+            if (koeCode) {
                 try {
                     const res = await axios.get("/payment/getAthletePayments", {
                         params: {
-                            id
+                            koeCode
                         },
                         headers: { Authorization: token }
                     });
@@ -29,14 +29,14 @@ export const Payments = () => {
         }
         getMatches();
         // eslint-disable-next-line
-    }, [auth.athlete._id]);
+    }, [koeCode]);
 
     const handleCheck = () => {
         setChecked(!checked);
     }
 
     const handleClick = (payment) => {
-        navigate("/payMonth", { state: { month: payment.month, year: payment.year, aid: id } })
+        navigate("/payMonth", { state: { month: payment.month, year: payment.year, koeCode: koeCode } })
     }
 
     return (

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { errorMessage } from '../Notification.js';
+import { errorMessage } from '../Notification.jsx';
 import { useSelector } from 'react-redux';
 
 export const CreateMatch = () => {
@@ -48,7 +48,6 @@ export const CreateMatch = () => {
 
     const handleAdd = (data) => {
         const participant = {
-            aid: data._id,
             fullName: data.fullName,
             koeCode: data.koeCode,
             goals: 0
@@ -56,8 +55,9 @@ export const CreateMatch = () => {
 
         setMatch({ ...match, participants: [...participants, participant] })
     }
+
     const handleDelete = (data) => {
-        setMatch({ ...match, participants: participants.filter(participant => participant.aid !== data._id) });
+        setMatch({ ...match, participants: participants.filter(participant => participant.koeCode !== data.koeCode) });
     }
 
     const handleSubmit = async (e) => {
@@ -100,7 +100,7 @@ export const CreateMatch = () => {
             </form><br />
             <div>
                 {athletes.map((athlete, i) => <p key={i}>{athlete.fullName}
-                    {participants.find(participant => participant.aid === athlete._id) ?
+                    {participants.find(participant => participant.koeCode === athlete.koeCode) ?
                         <button onClick={() => handleDelete(athlete)}>Delete</button> :
                         <button onClick={() => handleAdd(athlete)}>Add</button>}</p>)}
             </div>

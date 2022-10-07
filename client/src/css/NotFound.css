@@ -1,0 +1,14 @@
+.warning-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.warning {
+    margin-top: 20px;
+    width: 20%;
+    height: 20%;
+    color: yellow;
+}
+

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import "../css/Rankings.css";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBullseye, faUser, faIdCard, faMedal } from "@fortawesome/free-solid-svg-icons";
+import { faBullseye, faUser, faIdCard, faMedal, faStopwatch, faCalendarCheck } from "@fortawesome/free-solid-svg-icons";
 
 export const Rankings = () => {
     const [ranking, setRanking] = useState([]);
@@ -33,6 +33,9 @@ export const Rankings = () => {
                 const goalRankings = await axios.get("/match/getGoalRankings", {
                     headers: { Authorization: token }
                 });
+                const goalRankings = await axios.get("/match/getGoalRankings", {
+                    headers: { Authorization: token }
+                });
 
                 setRanking(res.data.sort((a, b) => b.attendances - a.attendances));
                 setGoalRanking(goalRankings.data);
@@ -46,14 +49,14 @@ export const Rankings = () => {
 
     return (
         <div className="rank-container">
-            <label>
+            <div className="selection">
                 Choose how you want to rank the athletes<br />
                 <select onChange={handleChange}>
                     <option value="attendances">By Attendances</option>
                     <option value="goals">By Goals</option>
                     <option value="sprints">By Sprints</option>
                 </select>
-            </label>
+            </div>
             <div className="list">
                 {
                     choice === "goals" ? goalRanking.length !== 0 ?
@@ -69,19 +72,34 @@ export const Rankings = () => {
                                 <div className="avatar">{athlete._id.fullName.split(" ").map((word) => word.charAt(0).toUpperCase())}</div>
                                 <div className="content">
                                     <p className="name"><FontAwesomeIcon icon={faUser} />&nbsp;{athlete._id.fullName}</p>
-                                    <p><FontAwesomeIcon icon={faIdCard} /> &nbsp;{athlete._id.koeCode}</p>
-                                    <p><FontAwesomeIcon icon={faBullseye} /> &nbsp;{athlete.totalGoals}</p>
+                                    <p><FontAwesomeIcon icon={faIdCard} />&nbsp;{athlete._id.koeCode}</p>
+                                    <p><FontAwesomeIcon icon={faBullseye} />&nbsp;{athlete.totalGoals}</p>
                                 </div>
                                 <FontAwesomeIcon className="medal" icon={faMedal} />
                             </motion.div>)
 
-                        : <p>Athletes haven't scored yet</p> :
-                        choice === "attendances" ? ranking.length !== 0 ?
-                            ranking.map((athlete, i) =>
-                                <div key={i}>{athlete.fullName} &nbsp;&nbsp; {choice}: &nbsp; {athlete.attendances}</div>)
-                            : <div>No athletes</div> : ranking.length !== 0 ?
-                            ranking.map((athlete, i) => <div key={i}>{athlete.fullName} &nbsp;&nbsp; {choice}: &nbsp; {athlete.avgSprint}</div>)
-                            : <p>No athletes</p>
+                        : <p className="no-data">Athletes haven't scored yet</p>
+                        : ranking.length !== 0 ? ranking.map((athlete, i) =>
+                            <motion.div
+                                key={i}
+                                className="card"
+                                initial={{ opacity: 0, translateX: -50 }}
+                                animate={{ opacity: 1, translateX: 0 }}
+                                transition={{ duration: 0.5, delay: i * 0.1 }}
+                            >
+                                {i + 1}. &nbsp;
+                                <div className="avatar">{athlete.fullName.split(" ").map((word) => word.charAt(0).toUpperCase())}</div>
+                                <div className="content">
+                                    <p className="name"><FontAwesomeIcon icon={faUser} />&nbsp;{athlete.fullName}</p>
+                                    <p><FontAwesomeIcon icon={faIdCard} />&nbsp;{athlete.koeCode}</p>
+                                    <p>{choice === "attendances" ? <FontAwesomeIcon icon={faCalendarCheck} /> : <FontAwesomeIcon icon={faStopwatch} />}&nbsp;
+                                        {choice === "attendances" ? athlete.attendances : athlete.avgSprint}
+                                    </p>
+                                </div>
+                                <FontAwesomeIcon className="medal" icon={faMedal} />
+                            </motion.div>)
+                            : <div className="no-data">No athletes</div>
+
                 }
             </div>
         </div>

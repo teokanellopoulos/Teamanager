@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { errorMessage } from '../Notification.js';
+import { errorMessage } from '../Notification.jsx';
 import { useNavigate } from "react-router-dom";
 
 export const ViewMatches = () => {
@@ -51,10 +51,7 @@ export const ViewMatches = () => {
 
             setMatches(matches.filter(match => match._id !== data._id));
         } catch (error) {
-            setErr(error.response.data.msg);
-            setTimeout(() => {
-                setDisplay("none");
-            }, 3000);
+            window.location.href = "/viewMatches";
         }
     }
 

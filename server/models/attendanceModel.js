@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
-const paymentSchema = new mongoose.Schema({
+const attendanceSchema = new mongoose.Schema({
     fullName: {
         type: String,
-        required: true
+        required: true 
     },
     month: {
         type: Number,
@@ -17,14 +17,10 @@ const paymentSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    attended: {
-        type: Boolean,
-        default: false
-    },
-    paid: {
-        type: Boolean,
+    numOfAttendances: {
+        type: Number,
         default: 0
-    }
+    } 
 });
 
-module.exports = mongoose.model("payments", paymentSchema);
+module.exports = mongoose.model("attendances", attendanceSchema);

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { errorMessage, successMessage } from '../Notification.js';
+import { errorMessage, successMessage } from '../Notification.jsx';
 
 export const ViewPayments = () => {
     const initialState = {

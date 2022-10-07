@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from "axios";
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { errorMessage } from '../Notification.js';
+import { errorMessage } from '../Notification.jsx';
 import { useNavigate } from 'react-router-dom';
 
 export const EditMatch = () => {

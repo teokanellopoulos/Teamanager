@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { errorMessage } from "../Notification.js";
+import { errorMessage } from "../Notification.jsx";
 import { dispatchAthlete, fetchAthlete } from "../../redux/actions/actions.js";
 
 export const Profile = () => {

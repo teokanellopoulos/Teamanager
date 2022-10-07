@@ -13,6 +13,7 @@ app.use(cookieParser());
 app.use("/athlete", require("./routes/athleteRouter.js"));
 app.use("/payment", require("./routes/paymentRouter.js"));
 app.use("/match", require("./routes/matchRouter.js"));
+app.use("/attendance", require("./routes/attendanceRouter.js"));
 
 mongoose.connect("mongodb://localhost:27017/Teamanager", (error) => {
     if(error)

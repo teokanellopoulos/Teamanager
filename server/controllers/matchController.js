@@ -101,7 +101,7 @@ const matchController = {
             const victories = await matches.find({result: "victory"}).count();
 
             if(all === 0)
-                res.status(200).json(0);
+                return res.status(200).json(0);
 
             const percentage = victories / all;
             res.status(200).json(percentage);
@@ -112,7 +112,7 @@ const matchController = {
     getParticipations: async (req, res) => {
         try {
             const id = req.query.id;
-            const participations = await matches.find({ participants: {$elemMatch: { aid: id }} });
+            const participations = await matches.find({ participants: {$elemMatch: { koeCode: id }} });
             res.status(200).json(participations);
         } catch (error) {
             return res.status(500).json({ msg: error.message });

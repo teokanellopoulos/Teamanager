@@ -9,15 +9,15 @@ export const Participations = () => {
     const auth = useSelector(state => state.auth);
     const [checked, setChecked] = useState(false);
     const { athlete } = auth;
-    const id = athlete._id;
+    const koeCode = athlete.koeCode;
 
     useEffect(() => {
         const getMatches = async () => {
-            if (id) {
+            if (koeCode) {
                 try {
                     const res = await axios.get("/match/getParticipations", {
                         params: {
-                            id
+                            koeCode
                         },
                         headers: { Authorization: token }
                     });
@@ -33,7 +33,7 @@ export const Participations = () => {
         }
         getMatches();
         // eslint-disable-next-line
-    }, [auth.athlete._id]);
+    }, [koeCode]);
 
     const handleCheck = () => {
         setChecked(!checked);

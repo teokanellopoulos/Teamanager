@@ -12,3 +12,12 @@ body {
     font-family: helvetica;
     color: white;
 }
+
+.app {
+    display: flex;
+    flex-flow: column;
+}
+
+section {
+    flex-grow: 1;
+}

@@ -1,0 +1,54 @@
+.table-container {
+    overflow-x: auto;
+    margin: 30px 10px 0px 10px;
+}
+
+.mess {
+    text-align: center;
+}
+
+.athlete-info {
+    background-color: #001b29;
+    border: 1px solid;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
+.athlete-info td, .athlete-info th {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid;
+}
+
+th {
+    background-color: #558ca5;
+}
+
+.athlete-info tr:first-child th:first-child {
+    border-top-left-radius: 10px;
+}
+
+.athlete-info tr:first-child th:last-child {
+    border-top-right-radius: 10px;
+}
+
+.athlete-info tr:last-child > td {
+    border-bottom: none;
+}
+
+.export {
+    height: 30px;
+    margin-top: 10px;
+    width: 100px;
+    background-color: #558ca5;
+    border: none;
+    border-radius: 10px;
+    float: right;
+}
+
+.export:hover {
+    background-color: #7eb4cd;
+}

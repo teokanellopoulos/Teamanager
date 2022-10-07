@@ -32,10 +32,6 @@ const athleteSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    attendances: {
-        type: Number,
-        default: 0
-    },
     avgSprint: {
         type: Number,
         default: 0
@@ -43,10 +39,6 @@ const athleteSchema = new mongoose.Schema({
     lastSprint: {
         type: Number,
         default: 0
-    },
-    nofications: {
-        type: Array,
-        default: []
     }
 });
 

@@ -23,7 +23,7 @@ export const Login = () => {
         const handleGoogle = async (response) => {
             setDisplay("block");
             try {
-                await axios.post("/athlete/googleLogin", {tokenId: response.credential});
+                await axios.post("/athlete/googleLogin", { tokenId: response.credential });
                 localStorage.setItem("firstLogin", true);
                 dispatch(dispatchLogIn());
                 navigate("/");
@@ -55,14 +55,15 @@ export const Login = () => {
         setAthlete({ ...athlete, [name]: value, err: "" });
     }
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         setDisplay("block");
         try {
-            await axios.post("/athlete/login", { email, password });
-            localStorage.setItem("firstLogin", true);
-            dispatch(dispatchLogIn());
-            navigate("/");
+            axios.post("/athlete/login", { email, password }).then(() => {
+                localStorage.setItem("firstLogin", true);
+                dispatch(dispatchLogIn());
+                navigate("/");
+            });
         } catch (error) {
             setAthlete({ ...athlete, err: error.response.data.msg });
             setTimeout(() => {

@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
-import { AthleteNavBar } from "./components/athleteComponents/AthleteNavBar.js";
-import { Body } from "./components/Body";
+import { AthleteNavBar } from "./components/athleteComponents/AthleteNavBar.jsx";
+import { Body } from "./components/Body.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import "./App.css";
-import { Footer } from "./components/athleteComponents/Footer.js"
+import { Footer } from "./components/athleteComponents/Footer.jsx"
 import { dispatchLogIn, dispatchAthlete, fetchAthlete } from "./redux/actions/actions.js";
-import { AdminNavBar } from "./components/adminComponents/AdminNavBar.js";
+import { AdminNavBar } from "./components/adminComponents/AdminNavBar.jsx";
 
 export const App = () => {
     const dispatch = useDispatch();

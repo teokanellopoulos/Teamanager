@@ -36,11 +36,11 @@ const paymentController = {
             let changed = 0;
             const allAthletes = await athletes.find({ role: { $ne: 1 } });
             for (let i = 0; i < allAthletes.length; i++) {
-                const results = await payments.findOne({ aid: allAthletes[i]._id, year: date.getFullYear() });
+                const results = await payments.findOne({ koeCode: allAthletes[i].koeCode, year: date.getFullYear() });
                 if (!results) {
                     for (let j = 1; j <= 12; j++) {
                         let newPayment = new payments({
-                            fullName: allAthletes[i].fullName, month: j, year: date.getFullYear(), aid: allAthletes[i]._id, koeCode: allAthletes[i].koeCode
+                            fullName: allAthletes[i].fullName, month: j, year: date.getFullYear(), koeCode: allAthletes[i].koeCode
                         });
                         await newPayment.save();
                     }
@@ -81,8 +81,9 @@ const paymentController = {
                 ]
             }).count();
 
+
             if (all === 0)
-                res.status(200).json(0);
+                return res.status(200).json(0);
 
             const percentage = paid / all;
             res.status(200).json(percentage);
@@ -92,7 +93,7 @@ const paymentController = {
     },
     payMonth: async (req, res) => {
         try {
-            const { id, aid, amount, month, year, email } = req.body;
+            const { id, koeCode, amount, month, year, email } = req.body;
 
             const payment = await stripe.paymentIntents.create({
                 amount,
@@ -106,7 +107,7 @@ const paymentController = {
                 $and: [
                     { month: month },
                     { year: year },
-                    { aid: aid }
+                    { koeCode: koeCode }
                 ]
             }, { paid: true });
 
@@ -134,7 +135,6 @@ const paymentController = {
                 }
             });
 
-
             res.status(200).json(payment);
         } catch (error) {
             return res.status(500).json({ msg: error.message });
@@ -142,8 +142,8 @@ const paymentController = {
     },
     getAthletePayments: async (req, res) => {
         try {
-            const id = req.query.id;
-            const results = await payments.find({ aid: id });
+            const koeCode = req.query.koeCode;
+            const results = await payments.find({ koeCode: koeCode });
             res.status(200).json(results);
         } catch (error) {
             return res.status(500).json({ msg: error.message });

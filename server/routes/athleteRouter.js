@@ -12,7 +12,6 @@ router.get("/allAthletesInfo", auth, authAdmin, athleteController.getAllAthletes
 router.get("/allAthletesCount", auth, authAdmin, athleteController.getAllAthletesCount);
 router.patch("/updateProfile", auth, athleteController.updateProfile);
 router.patch("/updateAthlete", auth, authAdmin, athleteController.updateAthlete);
-router.delete("/delete/:id", auth, authAdmin, athleteController.deleteAthlete);
 router.get("/logout", athleteController.logout);
 router.post("/googleLogin", athleteController.googleLogin);
 
