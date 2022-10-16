@@ -65,14 +65,14 @@ const attendanceController = {
     },
     getTotalAttendances: async (req, res) => {
         try {
-            const totalAttendances = await attendances.aggregate([{
+            const attendanceRankings = await attendances.aggregate([{
                 $group: {
                     _id: { koeCode: "$koeCode", fullName: "$fullName" },
                     totalAttendances: { $sum: "$numOfAttendances" }
                 }
             }]);
 
-            res.status(200).json(totalAttendances);
+            res.status(200).json(attendanceRankings.sort((a, b) => b.totalAttendances - a.totalAttendances));
         } catch (error) {
             return res.status(500).json({ msg: error.message });
         }

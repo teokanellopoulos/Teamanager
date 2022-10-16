@@ -41,12 +41,11 @@ th {
 
 .export {
     height: 30px;
-    margin-top: 10px;
+    margin-bottom: 10px;
     width: 100px;
     background-color: #558ca5;
     border: none;
     border-radius: 10px;
-    float: right;
 }
 
 .export:hover {

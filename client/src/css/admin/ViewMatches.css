@@ -1,0 +1,104 @@
+.match-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.trash {
+    color: red;
+    cursor: pointer;
+    margin: 2px;
+    height: 25px;
+}
+
+.edit {
+    color: #558ca5;
+    height: 25px;
+    cursor: pointer;
+    margin: 2px;
+}
+
+.victory {
+    background-color: #116a0b;
+    text-align: center;
+    border-radius: 8px;
+    width: 500px;
+    margin-top: 10px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
+.defeat {
+    background-color: #920e0e;
+    text-align: center;
+    border-radius: 8px;
+    width: 500px;
+    margin-top: 10px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
+.count {
+    margin-right: 50px;
+}
+
+.draw {
+    background-color: #435042;
+    text-align: center;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    width: 500px;
+    margin-top: 10px;
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
+summary {
+    cursor: pointer;
+    user-select: none;
+}
+
+.participant-card {
+    background-color: #0d2c39;
+    margin: 5px;
+    border-radius: 8px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
+.card-data {
+    text-align: left;
+    margin-left: 10px;
+}
+
+.add-match {
+    height: 30px;
+    margin-top: 10px;
+    width: 200px;
+    background-color: #558ca5;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.add-match:hover {
+    background-color: #7eb4cd;
+}
+
+@media only screen and (max-width: 800px) {
+    .match-list {
+        width: 100%;
+    }
+    
+    .victory, .defeat, .draw {
+        width: 90%;
+    }
+}

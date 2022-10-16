@@ -8,7 +8,7 @@ const matchController = {
             if (!opponent || !date)
                 return res.status(400).json({ msg: "Please fill in all fields" });
 
-            if (participants.length < 7 || participants.length > 15)
+            if (participants.length < 1 || participants.length > 15)
                 return res.status(400).json({ msg: "You must put 7-15 participants in the match" });
 
             const match = await matches.findOne({ opponent, date });
@@ -30,7 +30,7 @@ const matchController = {
     getMatches: async (req, res) => {
         try {
             const allMatches = await matches.find();
-            res.status(200).json(allMatches.sort((a, b) => new Date(a.date) - new Date(b.date)));
+            res.status(200).json(allMatches.sort((a, b) => new Date(b.date) - new Date(a.date)));
         } catch (error) {
             return res.status(500).json({ msg: error.message });
         }
@@ -43,7 +43,7 @@ const matchController = {
             if (!opponent || !date)
                 return res.status(400).json({ msg: "Please fill in all fields" });
 
-            if (participants.length < 7 || participants.length > 15)
+            if (participants.length < 1 || participants.length > 15)
                 return res.status(400).json({ msg: "You must put 7-15 participants in the match" });
 
             const original = await matches.findOne({ _id });

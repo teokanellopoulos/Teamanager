@@ -13,6 +13,7 @@ export const EditMatch = () => {
         score: "",
         result: ""
     };
+    
     const [match, setMatch] = useState(initialState);
     const param = useParams();
     const navigate = useNavigate();
@@ -35,7 +36,7 @@ export const EditMatch = () => {
                 setAthletes(athletes.data);
                 setMatch(matches.data.find(match => match._id === param.id));
             } catch (error) {
-                window.location.href = `/${param.id}`;
+                window.location.href = `/editMatch/${param.id}`;
             }
         }
         getData();
@@ -65,7 +66,6 @@ export const EditMatch = () => {
 
     const handleAdd = (data) => {
         const participant = {
-            aid: data._id,
             fullName: data.fullName,
             koeCode: data.koeCode,
             goals: 0
@@ -75,14 +75,14 @@ export const EditMatch = () => {
     }
 
     const handleDelete = (data) => {
-        setMatch({ ...match, participants: participants.filter(participant => participant.aid !== data._id) });
+        setMatch({ ...match, participants: participants.filter(participant => participant.koeCode !== data.koeCode) });
     }
 
     const handleChange = (e, data) => {
         const { name, value } = e.target;
         setMatch({
             ...match, participants: participants.map(participant => {
-                if (participant.aid === data._id) {
+                if (participant.koeCode === data.koeCode) {
                     return { ...participant, [name]: parseInt(value) }
                 }
                 return participant;
@@ -126,13 +126,13 @@ export const EditMatch = () => {
             {err && errorMessage(err, display)}
 
             {athletes.map((athlete, i) => <div key={i}>{athlete.fullName}
-                {participants.find(participant => participant.aid === athlete._id) ?
+                {participants.find(participant => participant.koeCode === athlete.koeCode) ?
                     <div>Change goals
                         <input
                             type="number"
                             onChange={(e) => handleChange(e, athlete)}
                             name="goals"
-                            defaultValue={participants.find(participant => participant.aid === athlete._id).goals}
+                            defaultValue={participants.find(participant => participant.koeCode === athlete.koeCode).goals}
                         />
                         <button onClick={() => handleDelete(athlete)}>Delete</button></div>
                     :
