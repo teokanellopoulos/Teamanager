@@ -1,0 +1,75 @@
+.payments-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.month-payments {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.non-payers {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.payment-form {
+    background-color: #001b29;
+    width: 300px;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    padding: 12px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.search {
+    height: 30px;
+    margin-top: 10px;
+    width: 100px;
+    background-color: #558ca5;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.search:hover {
+    background-color: #7eb4cd;
+}
+
+.checkbox {
+    margin: 5px;
+}
+
+.payment-card {
+    background-color: #001b29;
+    margin: 8px;
+    width: 300px;
+    border-radius: 8px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
+.card-data-payment {
+    margin-left: 20px;
+}
+
+label {
+    margin: 5px;
+}
+
+@media only screen and (max-width: 500px) {
+    .month-payments, .non-payers {
+        width: 100%;
+    }
+
+    .payment-card, .payment-form {
+        width: 90%;
+    }
+}

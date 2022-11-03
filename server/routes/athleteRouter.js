@@ -10,6 +10,7 @@ router.get("/athleteInfo", auth, athleteController.getAthleteInfo);
 router.get("/allAthletes", auth, athleteController.getAllAthletes);
 router.get("/allAthletesInfo", auth, authAdmin, athleteController.getAllAthletesInfo);
 router.get("/allAthletesCount", auth, authAdmin, athleteController.getAllAthletesCount);
+router.post("/newYearPaymentsAndAttendances", auth, authAdmin, athleteController.newYearPaymentsAndAttendances);
 router.patch("/updateProfile", auth, athleteController.updateProfile);
 router.patch("/updateAthlete", auth, authAdmin, athleteController.updateAthlete);
 router.get("/logout", athleteController.logout);

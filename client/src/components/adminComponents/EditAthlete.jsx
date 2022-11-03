@@ -35,7 +35,7 @@ export const EditAthlete = ({ athlete, attendance, count }) => {
                 headers: { Authorization: token }
             });
         } catch (error) {
-            console.log(error.response.data.msg)
+            window.location.href = "/updateAthletes"
         }
     }
 
@@ -46,6 +46,7 @@ export const EditAthlete = ({ athlete, attendance, count }) => {
             transition={{ duration: 0.5, delay: count * 0.1 }}
             className="editCard"
         >
+            <p className="count">{count+1}.</p>
             <div className="userData">
                 <p><FontAwesomeIcon icon={faUser} /> {athlete.fullName}</p>
                 <p><FontAwesomeIcon icon={faIdCard} /> {attendance.koeCode}</p>
@@ -55,7 +56,7 @@ export const EditAthlete = ({ athlete, attendance, count }) => {
                 <input
                     type="number"
                     min="0"
-                    className="input"
+                    className="number-field"
                     defaultValue={attendance.numOfAttendances}
                     name="numOfAttendances"
                     onChange={handleInput1}
@@ -65,7 +66,7 @@ export const EditAthlete = ({ athlete, attendance, count }) => {
                 <input
                     type="number"
                     min="0"
-                    className="input"
+                    className="number-field"
                     step="any"
                     defaultValue={athlete.lastSprint}
                     name="lastSprint"

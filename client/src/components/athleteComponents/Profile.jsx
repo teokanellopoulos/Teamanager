@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { errorMessage } from "../Notification.jsx";
+// import { errorMessage } from "../Notification.jsx";
 import { dispatchAthlete, fetchAthlete } from "../../redux/actions/actions.js";
 
 export const Profile = () => {
@@ -73,7 +73,7 @@ export const Profile = () => {
                 /><br/>
                 <button type="submit">Change</button>
             </form>
-            {err && errorMessage(err, display)}
+            {/* {err && errorMessage(err, display)} */}
         </div>
     )
 }

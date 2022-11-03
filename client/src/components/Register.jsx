@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { errorMessage } from "./Notification";
+// import { errorMessage } from "./Notification";
 import { useNavigate } from "react-router-dom";
 
 export const Register = () => {
@@ -91,7 +91,7 @@ export const Register = () => {
             </form>
             <p>Already have an account? <Link to="/login">Login</Link></p>
 
-            {err && errorMessage(err, display)}
+            {/* {err && errorMessage(err, display)} */}
         </div>
     )
 }

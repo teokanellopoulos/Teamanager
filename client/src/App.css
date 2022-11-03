@@ -21,3 +21,123 @@ body {
 section {
     flex-grow: 1;
 }
+
+.header {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.match-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.match-form {
+    background-color: #001b29;
+    width: 300px;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    padding: 12px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+.trash {
+    color: red;
+    cursor: pointer;
+    margin-left: 3px;
+    height: 20px;
+}
+
+.trash:hover {
+    color: rgb(224, 85, 85);
+}
+
+.number-field {
+    background-color: #001b29;
+    color: white;
+    width: 80px;
+    height: 30px;
+    outline: 0;
+    border: none;
+    font-size: medium;
+    border-bottom: 2px solid #3e728a;
+    margin-bottom: 10px;
+}
+
+.text-field {
+    background-color: #001b29;
+    color: white;
+    width: 200px;
+    height: 30px;
+    outline: 0;
+    border: none;
+    font-size: medium;
+    border-bottom: 2px solid #3e728a;
+    margin-bottom: 10px;
+}
+
+.text-field:focus {
+    border-bottom: 2px solid #94c0d5;
+    
+}
+
+.number-field:focus {
+    border-bottom: 2px solid #94c0d5;
+}
+
+.p-card {
+    background-color: #001b29;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 300px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
+.create-match {
+    width: 100px;
+    height: 30px;
+    background-color: #558ca5;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.create-match:hover {
+    background-color: #7eb4cd;
+}
+
+.p-card-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.p-card-data {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.add {
+    color: #3e728a;
+    height: 20px;
+}
+
+.add:hover {
+    color: #689cb4;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 500px) {
+    .edit-form, .match-form {
+        width: 90%;
+    }
+
+    .p-card {
+        width: 90%;
+    }
+}

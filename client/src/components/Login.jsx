@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { errorMessage } from "./Notification";
+// import { errorMessage } from "./Notification";
 import { dispatchLogIn } from "../redux/actions/actions.js";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -98,7 +98,7 @@ export const Login = () => {
             <div id="signInDiv"></div>
             <p>New to the team? <Link to="/register">Register</Link></p>
 
-            {err && errorMessage(err, display)}
+            {/* {err && errorMessage(err, display)} */}
         </div>
     )
 }

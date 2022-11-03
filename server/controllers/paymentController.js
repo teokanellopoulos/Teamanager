@@ -22,7 +22,8 @@ const paymentController = {
             const results = await payments.find({
                 $and: [
                     { month: month },
-                    { year: year }
+                    { year: year },
+                    { attended: true}
                 ]
             });
 
@@ -31,34 +32,11 @@ const paymentController = {
             return res.status(500).json({ msg: error.message });
         }
     },
-    newYearPayments: async (req, res) => {
-        try {
-            let changed = 0;
-            const allAthletes = await athletes.find({ role: { $ne: 1 } });
-            for (let i = 0; i < allAthletes.length; i++) {
-                const results = await payments.findOne({ koeCode: allAthletes[i].koeCode, year: date.getFullYear() });
-                if (!results) {
-                    for (let j = 1; j <= 12; j++) {
-                        let newPayment = new payments({
-                            fullName: allAthletes[i].fullName, month: j, year: date.getFullYear(), koeCode: allAthletes[i].koeCode
-                        });
-                        await newPayment.save();
-                    }
-                } else
-                    changed++;
-            }
-
-            if (changed === allAthletes.length)
-                return res.status(400).json({ msg: "New year payments have already been made" });
-            else
-                return res.status(200).json({ msg: "New year payments have been added" });
-        } catch (error) {
-            return res.status(500).json({ msg: error.message });
-        }
-    },
     paymentsByYear: async (req, res) => {
         try {
-            const results = await payments.aggregate([{ $match: { paid: { $eq: true } } }, { $group: { _id: "$year", total: { $sum: 30 } } }]);
+            const results = await payments.aggregate([
+                { $match: { paid: { $eq: true } } }, { $group: { _id: "$year", total: { $sum: 30 } } }
+            ]);
             return res.status(200).json(results.sort((a, b) => a._id - b._id));
         } catch (error) {
             return res.status(500).json({ msg: error.message });
@@ -145,6 +123,19 @@ const paymentController = {
             const koeCode = req.query.koeCode;
             const results = await payments.find({ koeCode: koeCode });
             res.status(200).json(results);
+        } catch (error) {
+            return res.status(500).json({ msg: error.message });
+        }
+    },
+    getAllNonPayers: async (req, res) => {
+        try {
+            const nonPayers = await payments.find({
+            $and: [
+                { attended: true },
+                { paid: false }
+            ]});
+
+            res.status(200).json(nonPayers);
         } catch (error) {
             return res.status(500).json({ msg: error.message });
         }

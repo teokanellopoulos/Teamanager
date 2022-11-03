@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Line } from "react-chartjs-2";
 import axios from "axios";
-import "../../css/admin/LineChart.css";
 import { useSelector } from "react-redux";
 import { CategoryScale, LinearScale, Chart as ChartJS, PointElement, LineElement, Title, Tooltip, Legend, LineController, Filler } from 'chart.js';
 

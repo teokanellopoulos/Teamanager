@@ -45,7 +45,7 @@ export const ViewMatches = () => {
 
             setMatches(matches.filter(match => match._id !== data._id));
         } catch (error) {
-            console.log(error);
+            window.location.href = "/viewMatches";
         }
     }
 
@@ -73,7 +73,7 @@ export const ViewMatches = () => {
                                     <div className="participants-list">
                                         {
                                             match.participants.map((participant, j) =>
-                                                <div className="participant-card">
+                                                <div className="participant-card" key={j}>
                                                     {j + 1}.
                                                     <div className="card-data">
                                                         <FontAwesomeIcon icon={faUser}/> {participant.fullName}<br />
@@ -86,7 +86,7 @@ export const ViewMatches = () => {
                                     </div>
                                 </details>
                             </div>
-                            <div>
+                            <div className="match-choice">
                                 <FontAwesomeIcon icon={faPenToSquare} onClick={() => handleUpdate(match)} className="edit" />
                                 <FontAwesomeIcon icon={faTrashCan} onClick={() => handleDelete(match)} className="trash" />
                             </div>

@@ -28,7 +28,7 @@ export const AthleteNavBar = () => {
                 <Link to="#">{athlete.fullName}</Link>
                 <ul>
                     <li><Link to="/profile">Profile</Link></li>
-                    <li><Link to="/logout" onClick={handleLogout}>Logout</Link></li>
+                    <li><Link to="/" onClick={handleLogout}>Logout</Link></li>
                 </ul>
             </li>
         )

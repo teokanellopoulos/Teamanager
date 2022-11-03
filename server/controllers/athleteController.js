@@ -61,9 +61,7 @@ const athleteController = {
                 });
 
                 await newPayment.save();
-            }
 
-            for(let i = date.getMonth() + 1 ; i <= 12; i++){
                 let newAttendance = new attendances({
                     fullName, koeCode, month: i, year: date.getFullYear()
                 });
@@ -208,6 +206,9 @@ const athleteController = {
 
             const athlete = await athletes.findOne({_id});
 
+            if(!athlete)
+                return res.status(400).json({msg: "Athlete not found"});
+
             let avgSprint = athlete.avgSprint;
 
             if(avgSprint !== 0){
@@ -226,7 +227,39 @@ const athleteController = {
         } catch (error) {
             return res.status(500).json({msg: error.message});
         }
+    },
+    newYearPaymentsAndAttendances: async (req, res) => {
+        try {
+            let changed = 0;
+            const allAthletes = await athletes.find({ role: { $ne: 1 } });
+            for (let i = 0; i < allAthletes.length; i++) {
+                let exists = await attendances.findOne({ koeCode: allAthletes[i].koeCode, year: date.getFullYear() });
+                exists = exists && await payments.findOne({ koeCode: allAthletes[i].koeCode, year: date.getFullYear() });
+                if (!exists) {
+                    for (let j = 1; j <= 12; j++) {
+                        let newMonthAttendance = new attendances({
+                            fullName: allAthletes[i].fullName, month: j, year: date.getFullYear(), koeCode: allAthletes[i].koeCode
+                        });
+                        await newMonthAttendance.save();
+
+                        let newMonthPayment = new payments({
+                            fullName: allAthletes[i].fullName, month: j, year: date.getFullYear(), koeCode: allAthletes[i].koeCode
+                        });
+                        await newMonthPayment.save();
+                    }
+                } else
+                    changed++;
+            }
+
+            if (changed === allAthletes.length)
+                return res.status(400).json({ msg: "New year payments and attendances have already been added" });
+            else
+                return res.status(200).json({ msg: "New year payments and attendances have been added" });
+        } catch (error) {
+            return res.status(500).json({ msg: error.message });
+        }
     }
+
 };
 
 const validateEmail = (email) => {

@@ -46,6 +46,7 @@ th {
     background-color: #558ca5;
     border: none;
     border-radius: 10px;
+    cursor: da;
 }
 
 .export:hover {

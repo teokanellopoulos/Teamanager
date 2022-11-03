@@ -40,6 +40,9 @@ const attendanceController = {
                 ]
             });
 
+            if(!monthAttendance)
+                return res.status(400).json({msg: "Month attendance not found"});
+
             if (monthAttendance.numOfAttendances === 0) {
                 await payments.findOneAndUpdate({
                     $and: [

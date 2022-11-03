@@ -5,16 +5,18 @@
     margin-top: 50px;
 }
 
-.trash {
-    color: red;
-    cursor: pointer;
-    margin: 2px;
-    height: 25px;
+.edit:hover {
+    color: #81a8bb;;
+}
+
+.match-choice {
+    display: flex;
+    align-items: baseline;
 }
 
 .edit {
     color: #558ca5;
-    height: 25px;
+    height: 20px;
     cursor: pointer;
     margin: 2px;
 }

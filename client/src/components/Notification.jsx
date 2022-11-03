@@ -1,10 +1,12 @@
-export const errorMessage = (msg, display) => {
+import "../css/Notification.css";
+
+export const ErrorMessage = ({msg, className}) => {
     return (
-        <div id="err" style={{display: display}}>{msg}</div>
+        <div className={`error ${className ? "block" : "fade-out"}`}>{msg}</div>
     )
 }
 
-export const successMessage = (msg, display) => {
+export const SuccessMessage = (msg, display) => {
     return (
         <div id="suc" style={{display: display}}>{msg}</div>
     )

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { CircularProgressbar } from 'react-circular-progressbar';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import { useSelector } from 'react-redux';
 import 'react-circular-progressbar/dist/styles.css';
 
@@ -29,11 +29,10 @@ export const PaymentsProgressBar = () => {
     }, [counter]);
 
     return (
-        <div>
-            <div style={{ width: 150, marginLeft: 70 }}>
-                This month
-                <CircularProgressbar value={counter} text={`${counter}%`} />
-                have paid
+        <div className="text">
+            Month percentage
+            <div className="percentage">
+                <CircularProgressbar value={counter} text={`${counter}%`} styles={buildStyles({pathColor:"#558ca5"})}/>
             </div>
         </div>
     )

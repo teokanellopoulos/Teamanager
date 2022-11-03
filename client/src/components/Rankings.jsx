@@ -113,7 +113,7 @@ export const Rankings = () => {
                                 </div>
                                 <FontAwesomeIcon className="medal" icon={faMedal} />
                             </motion.div>)
-                        : <div className="no-data">No athletes</div>
+                    : <div className="no-data">No athletes</div>
                 }
             </div>
         </div>

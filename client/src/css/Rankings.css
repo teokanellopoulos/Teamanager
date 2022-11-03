@@ -16,6 +16,7 @@ select {
     margin-top: 6px;
     color: white;
     border: none;
+    cursor: pointer;
 }
 
 .card {

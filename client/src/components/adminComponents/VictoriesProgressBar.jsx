@@ -29,11 +29,10 @@ export default function VictoriesProgressBar() {
     }, [counter]);
 
     return (
-        <div>
-            <div style={{ width: 150, marginLeft: 70 }}>
-                The team has won
-                <CircularProgressbar value={counter} text={`${counter}%`} styles={buildStyles({pathColor:"yellow"})}/>
-                of matches
+        <div className="text">
+            Victory percentage
+            <div className="percentage">
+                <CircularProgressbar value={counter} text={`${counter}%`} styles={buildStyles({ pathColor: "#558ca5" })} />
             </div>
         </div>
     )

@@ -1,23 +1,41 @@
 import { useState } from 'react';
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { errorMessage, successMessage } from '../Notification.jsx';
+import "../../css/admin/ViewPayments.css";
+import { useEffect } from "react";
+import { motion } from "framer-motion";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendarDays, faIdCard, faUser } from "@fortawesome/free-solid-svg-icons";
 
 export const ViewPayments = () => {
     const initialState = {
         month: "",
-        year: "",
-        err: "",
-        suc: ""
+        year: ""
     };
 
     const [input, setInput] = useState(initialState);
-    const [display, setDisplay] = useState("block");
     const [checked, setChecked] = useState(false);
     const [payments, setPayments] = useState([]);
+    const [nonPayers, setNonPayers] = useState([]);
     const token = useSelector(state => state.token);
 
-    const { month, year, err, suc } = input;
+    const { month, year } = input;
+
+    useEffect(() => {
+        const getAllNonPayers = async () => {
+            try {
+                const res = await axios.get("/payment/getAllNonPayers", {
+                    headers: { Authorization: token }
+                });
+                setNonPayers(res.data);
+            } catch (error) {
+                window.location.href = "/viewPayments";
+            }
+        }
+
+        getAllNonPayers();
+        // eslint-disable-next-line
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -32,7 +50,7 @@ export const ViewPayments = () => {
 
             setPayments(res.data);
         } catch (error) {
-            setPayments("An error has occured")
+            window.location.href = "/viewPayments";
         }
     }
 
@@ -45,70 +63,88 @@ export const ViewPayments = () => {
         setChecked(!checked);
     }
 
-    const handleClick = async () => {
-        setDisplay("block");
-        try {
-            const res = await axios.post("/payment/newYearPayments", {}, { headers: { Authorization: token } });
-            setInput({ ...input, suc: res.data.msg, err: ""});
-        } catch (error) {
-            setInput({ ...input, err: error.response.data.msg, suc: "" });
-        }
-        setTimeout(() => {
-            setDisplay("none");
-        }, 3000);
-    }
-
     return (
-        <div>ViewPayments
-            <form onSubmit={handleSubmit}>
+        <div className="payments-container">
+            <label>Check to see monthly payments, uncheck to see all who haven't payed
                 <input
-                    type="number"
-                    min="1"
-                    max="12"
-                    name="month"
-                    required
-                    value={month}
-                    onChange={handleChange}
-                    placeholder="Enter month (1-12)"
+                    type="checkbox"
+                    name="choice"
+                    value="choice"
+                    checked={checked}
+                    onChange={handleCheck}
+                    className="checkbox"
                 />
-                <input
-                    type="number"
-                    min="2022"
-                    name="year"
-                    required
-                    value={year}
-                    onChange={handleChange}
-                    placeholder="Enter year (from 2022 and so on)"
-                />
-                <button>Search</button>
-            </form>
-            <br />
-            Check to see who has paid, uncheck to see who hasn't
-            <input
-                type="checkbox"
-                name="choice"
-                value="choice"
-                checked={checked}
-                onChange={handleCheck}
-            /><br />
-            <div>
-                {payments.length !== 0 ? 
-                    checked ?
-                        payments.filter(payment => payment.paid === true).length !== 0 ?
-                            payments.filter(payment => payment.paid === true).map((item, i) =>
-                                <p key={i}>{item.fullName} &nbsp;&nbsp; Payed</p>) 
-                        : "No one has paid this month" :
-                        payments.filter(payment => payment.paid !== true).length !== 0 ? 
-                            payments.filter(payment => payment.paid !== true).map((item, i) =>
-                                <p key={i}>{item.fullName} &nbsp;&nbsp; Hasn't payed</p>) 
-                        : "Everyone has paid this month"
-                :
-                "No results"}
-            </div>
-            <button onClick={handleClick}>Add new year payments</button>
-            <br/>
-            {err && errorMessage(err, display)}
-            {suc && successMessage(suc, display)}
+            </label>
+            {
+                checked ?
+                    <div className="month-payments">
+                        <h3 className="header">View monthly payments</h3>
+                        <form onSubmit={handleSubmit} className="payment-form">
+                            Enter month (1-12)<br />
+                            <input
+                                type="number"
+                                min="1"
+                                max="12"
+                                name="month"
+                                required
+                                value={month}
+                                onChange={handleChange}
+                                className="number-field"
+                            /><br />
+                            Enter year (starting from 2022)<br />
+                            <input
+                                type="number"
+                                min="2022"
+                                name="year"
+                                required
+                                value={year}
+                                onChange={handleChange}
+                                className="number-field"
+                            /><br />
+                            <button className="search">Search</button>
+                        </form>
+                        {
+                            payments.map((payment, i) =>
+                                <motion.div
+                                    key={i}
+                                    initial={{ opacity: 0, translateX: -50 }}
+                                    animate={{ opacity: 1, translateX: 0 }}
+                                    transition={{ duration: 0.5, delay: i * 0.1 }}
+                                    className="payment-card"
+                                    style={{backgroundColor: payment.paid ? "#116a0b" : "#920e0e"}}
+                                >
+                                    {i + 1}.
+                                    <div className="card-data-payment">
+                                        <FontAwesomeIcon icon={faUser} /> {payment.fullName}<br />
+                                        <FontAwesomeIcon icon={faIdCard} /> {payment.koeCode}<br />
+                                        <FontAwesomeIcon icon={faCalendarDays} /> {payment.month}/{payment.year}
+                                        <p>Status: {payment.paid ? "Paid" : "Hasn't paid"}</p>
+                                    </div>
+                                </motion.div>)
+                        }
+                    </div>
+                    :
+                    <div className="non-payers">
+                        {
+                            nonPayers.map((nonPayer, i) =>
+                                <motion.div
+                                    key={i}
+                                    initial={{ opacity: 0, translateX: -50 }}
+                                    animate={{ opacity: 1, translateX: 0 }}
+                                    transition={{ duration: 0.5, delay: i * 0.1 }}
+                                    className="payment-card"
+                                >
+                                    {i + 1}.
+                                    <div className="card-data-payment">
+                                        <FontAwesomeIcon icon={faUser} /> {nonPayer.fullName}<br />
+                                        <FontAwesomeIcon icon={faIdCard} /> {nonPayer.koeCode}<br />
+                                        <FontAwesomeIcon icon={faCalendarDays} /> {nonPayer.month}/{nonPayer.year}
+                                        <p>Status: Hasn't paid</p>
+                                    </div>
+                                </motion.div>)
+                        }
+                    </div>
+            }
         </div>
     )
 }

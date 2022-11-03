@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import axios from "axios";
+import { motion } from "framer-motion";
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { errorMessage } from '../Notification.jsx';
+import { ErrorMessage } from '../Notification.jsx';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faIdCard, faTrashCan, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
 export const EditMatch = () => {
     const initialState = {
@@ -13,12 +16,12 @@ export const EditMatch = () => {
         score: "",
         result: ""
     };
-    
+
     const [match, setMatch] = useState(initialState);
     const param = useParams();
     const navigate = useNavigate();
     const [err, setErr] = useState("");
-    const [display, setDisplay] = useState("block");
+    const [display, setDisplay] = useState(true);
     const [athletes, setAthletes] = useState([]);
     const token = useSelector(state => state.token);
     const { _id, opponent, date, participants, opponentGoals } = match;
@@ -48,19 +51,21 @@ export const EditMatch = () => {
         const teamGoals = participants.reduce((sum, participant) => {
             return sum + parseInt(participant.goals);
         }, 0);
+        setDisplay(true);
+        setErr("");
 
         try {
-            setDisplay("block");
-            setErr("");
             await axios.patch("/match/updateMatch", { _id, opponent, date, participants, opponentGoals, teamGoals }, {
                 headers: { Authorization: token }
             });
             navigate("/viewMatches");
         } catch (error) {
-            setErr(error.response.data.msg);
-            setTimeout(() => {
-                setDisplay("none");
-            }, 3000);
+            if (error.response.data.msg === "Invalid token") {
+                window.location.href = `/editMatch/${param.id}`;
+            } else {
+                setErr(error.response.data.msg);
+                setDisplay(false);
+            }
         }
     }
 
@@ -96,22 +101,28 @@ export const EditMatch = () => {
     }
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
+        <div className="match-container">
+            <h3 className="header">Edit match</h3>
+            <form onSubmit={handleSubmit} className="match-form">
+                <p>Opponent name</p>
                 <input
                     type="text"
                     name="opponent"
                     required
                     defaultValue={opponent}
                     onChange={handleInput}
+                    className="text-field"
                 /><br />
+                Date of match: <br />
                 <input
                     type="date"
                     name="date"
                     required
                     defaultValue={date.split("T")[0]}
                     onChange={handleInput}
+                    className="text-field"
                 /><br />
+                Opponent goals: <br />
                 <input
                     type="number"
                     min="0"
@@ -119,24 +130,56 @@ export const EditMatch = () => {
                     required
                     defaultValue={opponentGoals}
                     onChange={handleInput}
+                    className="number-field"
                 /><br />
-                <button>Update</button>
+                <button className="update">Update</button>
             </form><br />
 
-            {err && errorMessage(err, display)}
+            <ErrorMessage msg={err} className={display} />
 
-            {athletes.map((athlete, i) => <div key={i}>{athlete.fullName}
-                {participants.find(participant => participant.koeCode === athlete.koeCode) ?
-                    <div>Change goals
-                        <input
-                            type="number"
-                            onChange={(e) => handleChange(e, athlete)}
-                            name="goals"
-                            defaultValue={participants.find(participant => participant.koeCode === athlete.koeCode).goals}
-                        />
-                        <button onClick={() => handleDelete(athlete)}>Delete</button></div>
-                    :
-                    <button onClick={() => handleAdd(athlete)}>Add</button>}</div>)}
+            <h3 className="header">Change participants</h3>
+
+            {athletes.map((athlete, i) =>
+                <motion.div
+                    initial={{ opacity: 0, translateX: -50 }}
+                    animate={{ opacity: 1, translateX: 0 }}
+                    transition={{ duration: 0.5, delay: i * 0.1 }}
+                    key={i}
+                    className="p-card"
+                >
+                    {participants.find(participant => participant.koeCode === athlete.koeCode) ?
+                        <div className="p-card-container">
+                            <p>{i + 1}.</p>
+                            <div className="p-card-data">
+                                <FontAwesomeIcon icon={faUser} /> {athlete.fullName}<br />
+                                <FontAwesomeIcon icon={faIdCard} /> {athlete.koeCode}<br /><br />
+                                Change goals<br />
+                                <input
+                                    type="number"
+                                    className="number-field"
+                                    onChange={(e) => handleChange(e, athlete)}
+                                    name="goals"
+                                    defaultValue={participants.find(participant => participant.koeCode === athlete.koeCode).goals}
+                                />
+                            </div>
+                            <div>
+                                <FontAwesomeIcon icon={faTrashCan} className="trash" onClick={() => handleDelete(athlete)} />
+                            </div>
+                        </div>
+                        :
+                        <div className="p-card-container">
+                            <p>{i + 1}.</p>
+                            <div className="p-card-data">
+                                <FontAwesomeIcon icon={faUser} /> {athlete.fullName}<br />
+                                <FontAwesomeIcon icon={faIdCard} /> {athlete.koeCode}<br />
+                            </div>
+                            <div>
+                                <FontAwesomeIcon icon={faUserPlus} onClick={() => handleAdd(athlete)} className="add" />
+                            </div>
+                        </div>
+                    }
+                </motion.div>
+            )}
         </div>
     )
 }
