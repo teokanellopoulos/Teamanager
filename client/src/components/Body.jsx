@@ -23,7 +23,7 @@ export const Body = () => {
     const auth = useSelector(state => state.auth);
     const { isLogged, isAdmin } = auth;
     return (
-        <section>
+        <div className="content-wrap">
             <Routes>
                 <Route path="/" element={ isAdmin ? <DashBoard/> : <AthleteMainPage/> } />
                 <Route path="/rankings" element={ !isLogged ? <p style={{textAlign: "center", margin: "50px"}}>You have to login</p> : <Rankings/> } />
@@ -43,6 +43,7 @@ export const Body = () => {
                 <Route path="/payments" element={ !isLogged ? <p style={{textAlign: "center", margin: "50px"}}>You have to login</p> : <Payments/> } />
                 <Route path="*" element={ <NotFound/> } />
             </Routes>
-        </section>
+            
+        </div>
     )
 }

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-// import { errorMessage } from "./Notification";
+import { ErrorMessage } from "../components/Notification.jsx";
 import { useNavigate } from "react-router-dom";
+import "../css/Register.css";
 
 export const Register = () => {
 
@@ -11,87 +11,89 @@ export const Register = () => {
         yob: "",
         phone: "",
         email: "",
-        password: "",
-        err: ""
+        password: ""
     };
 
     const navigate = useNavigate();
 
     const [athlete, setAthlete] = useState(initialState);
-    const [display, setDisplay] = useState("block");
+    const [display, setDisplay] = useState(true);
+    const [err, setErr] = useState("");
 
-    const { fullName, yob, phone, email, password, err } = athlete;
+    const { fullName, yob, phone, email, password } = athlete;
 
     const handleInput = (e) => {
         const { name, value } = e.target;
-        setAthlete({...athlete, [name]: value, err: "", success: ""});
+        setAthlete({ ...athlete, [name]: value });
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setDisplay("block");
+        setErr("");
+        setDisplay(true);
         try {
-            await axios.post("/athlete/register", {fullName, yob, phone, email, password});
+            await axios.post("/athlete/register", { fullName, yob, phone, email, password });
             navigate("/");
         } catch (error) {
-            setAthlete({...athlete, err: error.response.data.msg});
-            setTimeout(() => {
-                setDisplay("none");
-            }, 3000);
+            setErr(error.response.data.msg);
+            setDisplay(false);
         }
     }
 
     return (
-        <div className="registerPage">
-            <h2>Register</h2>
-            <form onSubmit={handleSubmit}>
-                <input 
-                    type="text" 
-                    placeholder="Enter fullName" 
+        <div className="register-form-container">
+            <ErrorMessage msg={err} className={display} />
+            <form onSubmit={handleSubmit} className="register-form">
+                <h2 className="label">Register</h2>
+                <input
+                    type="text"
+                    placeholder="Enter fullName"
                     value={fullName}
                     name="fullName"
                     onChange={handleInput}
                     required
-                /><br/>
-                <input 
-                    type="number" 
-                    placeholder="Enter year of birth (1980 - 2030)" 
+                    className="text-field"
+                /><br />
+                <input
+                    type="number"
+                    placeholder="Enter year of birth"
                     value={yob}
                     min="1980"
                     max="2030"
                     name="yob"
                     onChange={handleInput}
                     required
-                /><br/>
-                <input 
-                    type="tel" 
-                    placeholder="Enter phone" 
+                    className="text-field"
+                /><br />
+                <input
+                    type="tel"
+                    placeholder="Enter phone"
                     value={phone}
                     name="phone"
-                    onChange={handleInput} 
+                    onChange={handleInput}
                     required
-                /><br/>
-                <input 
-                    type="text" 
-                    placeholder="Enter email" 
+                    className="text-field"
+                /><br />
+                <input
+                    type="text"
+                    placeholder="Enter email"
                     value={email}
                     name="email"
                     onChange={handleInput}
                     required
-                /><br/>
-                <input 
-                    type="password" 
-                    placeholder="Enter password" 
+                    className="text-field"
+                /><br />
+                <input
+                    type="password"
+                    placeholder="Enter password"
                     value={password}
                     name="password"
-                    onChange={handleInput} 
+                    onChange={handleInput}
                     required
-                /><br/>
-                <button type="submit">Register</button>
+                    className="text-field"
+                /><br />
+                <button className="update">Register</button>
             </form>
-            <p>Already have an account? <Link to="/login">Login</Link></p>
-
-            {/* {err && errorMessage(err, display)} */}
         </div>
     )
 }

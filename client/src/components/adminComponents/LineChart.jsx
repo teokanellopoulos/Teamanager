@@ -42,7 +42,7 @@ export const LineChart = () => {
         return (<div>Loading...</div>)
     } else {
         return (
-            <div id="wrapper">
+            <div className="wrapper">
                 <Line
                     data={{
                         labels: data.map(year => year._id),
@@ -90,8 +90,8 @@ export const LineChart = () => {
                                 }
                             }
                         }
-                    }
-                        />
+                    } 
+                    />
             </div>
         )
     }

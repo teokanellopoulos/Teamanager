@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "../../css/admin/DashBoard.css";
 import { useSelector } from "react-redux";
+import { ErrorMessage } from "../Notification.jsx";
 
 export const DashBoard = () => {
     const [counter, setCounter] = useState("");
@@ -34,7 +35,9 @@ export const DashBoard = () => {
 
     const handleClick = async () => {
         try {
-            const res = await axios.post("/athlete/newYearPaymentsAndAttendances", {}, { headers: { Authorization: token } });
+            setErr("");
+            setDisplay(true);
+            await axios.post("/athlete/newYearPaymentsAndAttendances", {}, { headers: { Authorization: token } });
         } catch (error) {
             if (error.response.data.msg === "Invalid token") {
                 window.location.href = `/`;
@@ -47,16 +50,16 @@ export const DashBoard = () => {
 
     return (
         <div className="dashboard-container">
+            <ErrorMessage msg={err} className={display}/>
             <div className="add-new-data">
-                Add new year payments and attendances<br />
-                <button onClick={handleClick} className="new-data">Add</button>
+                <button onClick={handleClick} className="new-data">Add new year payments and attendances</button>
             </div>
             <div className="stats-container">
                 <LineChart />
                 <div className="stats">
                     <PaymentsProgressBar />
-                    <div className="description">Total athletes <div className="total-athletes">{counter}</div></div>
                     <VictoriesProgressBar />
+                    <div className="total-athletes-container">Total athletes <div className="total-athletes">{counter}</div></div>
                 </div>
             </div>
         </div>

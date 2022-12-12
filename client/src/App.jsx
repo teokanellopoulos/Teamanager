@@ -5,9 +5,10 @@ import { Body } from "./components/Body.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import "./App.css";
-import { Footer } from "./components/athleteComponents/Footer.jsx"
 import { dispatchLogIn, dispatchAthlete, fetchAthlete } from "./redux/actions/actions.js";
 import { AdminNavBar } from "./components/adminComponents/AdminNavBar.jsx";
+
+import { Footer } from "./components/athleteComponents/Footer.jsx";
 
 export const App = () => {
     const dispatch = useDispatch();

@@ -29,7 +29,7 @@ export default function VictoriesProgressBar() {
     }, [counter]);
 
     return (
-        <div className="text">
+        <div className="victories-progress-bar">
             Victory percentage
             <div className="percentage">
                 <CircularProgressbar value={counter} text={`${counter}%`} styles={buildStyles({ pathColor: "#558ca5" })} />

@@ -14,9 +14,9 @@ select {
     height: 30px;
     border-radius: 6px;
     margin-top: 6px;
-    color: white;
     border: none;
     cursor: pointer;
+    padding: 3px;
 }
 
 .card {
