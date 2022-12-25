@@ -1,0 +1,13 @@
+.carousel {
+    width: 50%;
+}
+
+.left:hover, .right:hover {
+    color: rgb(162, 162, 209);
+}
+
+@media only screen and (max-width: 800px){
+    .carousel {
+        width: 90%;
+    }
+}

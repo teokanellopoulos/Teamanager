@@ -1,16 +1,16 @@
 import { useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-// import { errorMessage } from "../Notification.jsx";
+import { ErrorMessage } from "../Notification.jsx";
 import { dispatchAthlete, fetchAthlete } from "../../redux/actions/actions.js";
+import { useNavigate } from "react-router-dom";
 
 export const Profile = () => {
-    
+
     const initialState = {
         fullName: "",
         yob: "",
-        phone: "",
-        err: ""
+        phone: ""
     };
 
     const auth = useSelector(state => state.auth);
@@ -18,17 +18,20 @@ export const Profile = () => {
     const dispatch = useDispatch();
     const { athlete } = auth;
     const [data, setData] = useState(initialState);
-    const [display, setDisplay] = useState("block");
-    const { fullName, yob, phone, err } = data;
+    const { fullName, yob, phone } = data;
+    const [display, setDisplay] = useState(true);
+    const [err, setErr] = useState("");
+    const navigate = useNavigate();
 
     const handleInput = (e) => {
         const { name, value } = e.target;
-        setData({...data, [name]: value, err: ""});
+        setData({ ...data, [name]: value, err: "" });
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setDisplay("block");
+        setErr("");
+        setDisplay(true);
         try {
             await axios.patch("/athlete/updateProfile", {
                 fullName: fullName ? fullName : athlete.fullName,
@@ -40,40 +43,48 @@ export const Profile = () => {
             fetchAthlete(token).then(res => {
                 dispatch(dispatchAthlete(res));
             });
+            navigate("/");
         } catch (error) {
-            setData({...data, err: error.response.data.msg});
-            setTimeout(() => {
-                setDisplay("none");
-            }, 3000);
+            if (error.response.data.msg === "Invalid token") {
+                window.location.href = `/`;
+            } else {
+                setErr(error.response.data.msg);
+                setDisplay(false);
+            }
         }
     }
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <input 
+        <div className="login-form-container">
+            <ErrorMessage msg={err} className={display} />
+            <form onSubmit={handleSubmit} className="login-form">
+                <h3 style={{ margin: "10px" }}>Change your data</h3>
+                <input
                     type="text"
+                    placeholder="Change fullName"
                     defaultValue={athlete.fullName}
                     name="fullName"
+                    className="text-field"
                     onChange={handleInput}
-                /><br/>
-                <input 
-                    type="number"
-                    defaultValue={athlete.yob}
-                    min="1980"
-                    max="2030"
-                    name="yob"
-                    onChange={handleInput}
-                /><br/>
-                <input 
-                    type="tel"  
+                /><br />
+                <input
+                    type="tel"
+                    placeholder="Change phone"
                     defaultValue={athlete.phone}
                     name="phone"
-                    onChange={handleInput} 
-                /><br/>
-                <button type="submit">Change</button>
+                    className="text-field"
+                    onChange={handleInput}
+                /><br />
+                <input
+                    type="number"
+                    placeholder="Change year of birth"
+                    defaultValue={athlete.yob}
+                    name="yob"
+                    className="text-field"
+                    onChange={handleInput}
+                /><br />
+                <button type="submit" className="update">Change</button>
             </form>
-            {/* {err && errorMessage(err, display)} */}
         </div>
     )
 }

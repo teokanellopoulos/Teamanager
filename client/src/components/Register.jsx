@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { ErrorMessage } from "../components/Notification.jsx";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "../css/Register.css";
 
@@ -58,8 +59,6 @@ export const Register = () => {
                     type="number"
                     placeholder="Enter year of birth"
                     value={yob}
-                    min="1980"
-                    max="2030"
                     name="yob"
                     onChange={handleInput}
                     required
@@ -93,6 +92,7 @@ export const Register = () => {
                     className="text-field"
                 /><br />
                 <button className="update">Register</button>
+                <p className="new">Already a member? <Link className="register" to="/login">Login</Link></p>
             </form>
         </div>
     )

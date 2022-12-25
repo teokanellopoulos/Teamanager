@@ -22,7 +22,7 @@ const athleteController = {
                 return res.status(400).json({msg: "Invalid email"});
             
             if(password.length < 6)
-                return res.status(400).json({msg: "Password must be atleast 6 characters"});
+                return res.status(400).json({msg: "Password must be at least 6 characters"});
 
             let koeCode = Math.floor(100000 + Math.random() * 900000);
 

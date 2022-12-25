@@ -26,7 +26,6 @@ export const Body = () => {
         <div className="content-wrap">
             <Routes>
                 <Route path="/" element={ isAdmin ? <DashBoard/> : <AthleteMainPage/> } />
-                <Route path="/rankings" element={ !isLogged ? <p style={{textAlign: "center", margin: "50px"}}>You have to login</p> : <Rankings/> } />
                 <Route path="/login" element={ isLogged ? <p style={{textAlign: "center", margin: "50px"}}>You have to login</p> : <Login/> } />
                 <Route path="/register" element={ isLogged ? <p style={{textAlign: "center", margin: "50px"}}>You have to login</p> : <Register/> } />
                 <Route path="/profile" element={ !isLogged || isAdmin ? <p style={{textAlign: "center", margin: "50px"}}>You have to login</p> : <Profile/> } />

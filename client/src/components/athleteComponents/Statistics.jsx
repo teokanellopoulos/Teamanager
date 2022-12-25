@@ -19,7 +19,7 @@ export const Statistics = () => {
                     });
                     setGoals(res.data.find(a => a._id.koeCode === koeCode).totalGoals);
                 } catch (error) {
-                    window.location.href = "/statistics";
+                    window.location.href = "/";
                 }
             }
         }
@@ -32,7 +32,7 @@ export const Statistics = () => {
             <p>Your total goals are {goals}</p>
             <p>Your total attendances are {attendances}</p>
             <p>Your average sprint is {avgSprint}s</p>
-            <Rankings />
+            <Rankings/>
         </div>
     )
 }

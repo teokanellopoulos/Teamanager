@@ -36,7 +36,7 @@ export const Rankings = () => {
                 setGoalRanking(goalRankings.data);
                 setAttendanceRanking(attendanceRankings.data);
             } catch (error) {
-                window.location.href = "/rankings";
+                window.location.href = "/";
             }
         }
         getAthletes();
@@ -46,7 +46,7 @@ export const Rankings = () => {
     return (
         <div className="rank-container">
             <div className="selection">
-                Choose how you want to rank the athletes<br />
+                Athlete rankings<br />
                 <select onChange={handleChange}>
                     <option value="attendances">By Attendances</option>
                     <option value="goals">By Goals</option>

@@ -30,7 +30,7 @@ export const PaymentsProgressBar = () => {
 
     return (
         <div className="payment-progress-bar">
-            Month payments percentage
+            Month payed
             <div className="percentage">
                 <CircularProgressbar value={counter} text={`${counter}%`} styles={buildStyles({pathColor:"#558ca5", width: 100})}/>
             </div>

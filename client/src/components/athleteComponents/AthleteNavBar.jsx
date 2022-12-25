@@ -1,12 +1,20 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useSelector } from "react-redux";
+import { useState } from "react";
 import axios from 'axios';
 import "../../css/athlete/AthleteNavBar.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark, faBars } from "@fortawesome/free-solid-svg-icons";
 
 export const AthleteNavBar = () => {
     const auth = useSelector(state => state.auth);
 
     const { athlete, isLogged } = auth;
+    const [click, setClick] = useState(false);
+
+    const handleClick = () => {
+        setClick(!click);
+    }
 
     const handleLogout = async () => {
         try {
@@ -18,32 +26,24 @@ export const AthleteNavBar = () => {
         }
     }
 
-    const showNav = () => {
-        return (
-            <li>
-                <Link to="/participations">Participations</Link><br/>
-                <Link to="/statistics">Statistics</Link><br/>
-                <Link to="/events">Events</Link><br/>
-                <Link to="/payments">Payments</Link><br/>
-                <Link to="#">{athlete.fullName}</Link>
-                <ul>
-                    <li><Link to="/profile">Profile</Link></li>
-                    <li><Link to="/" onClick={handleLogout}>Logout</Link></li>
-                </ul>
-            </li>
-        )
-    }
     return (
-        <header className='athlete-nav'>
-            <div className="logo">
-                <h1><Link to="/">Teamanager</Link></h1>
+        <nav className='athlete-nav'>
+            <div className="nav-container">
+                <NavLink to="/" className="nav-logo"><img src='/logo.png' alt=''></img></NavLink>
+                <ul className={click ? "nav-menu active" : "nav-menu"}>{
+                    isLogged ? <>
+                        <li className="nav-item"><NavLink className="nav-links" onClick={handleClick} to="/participations">Participations</NavLink><br /></li>
+                        <li className="nav-item"><NavLink className="nav-links" onClick={handleClick} to="/events">Events</NavLink><br /></li>
+                        <li className="nav-item"><NavLink className="nav-links" onClick={handleClick} to="/payments">Payments</NavLink><br /></li>
+                        <li className="nav-item"><NavLink className="nav-links" onClick={handleClick} style={{color: "yellow"}} to="/profile">{athlete.fullName}</NavLink></li>
+                        <li className="nav-item"><NavLink className="nav-links" to="/" style={{color: "red"}} onClick={handleLogout}>Logout</NavLink></li>
+                    </> :
+                        <li className="nav-item"><NavLink className="nav-links" onClick={handleClick} to="/login">Login</NavLink></li>}
+                </ul>
+                <div className="nav-icon" onClick={handleClick}>
+                    {click ? <FontAwesomeIcon icon={faXmark} /> : <FontAwesomeIcon icon={faBars} />}
+                </div>
             </div>
-            <ul>
-                <li><Link to="/">Main page</Link></li>
-                {
-                    isLogged ? showNav() : <li><Link to="/login">Login</Link></li>
-                }
-            </ul>
-        </header>
+        </nav>
     )
 }

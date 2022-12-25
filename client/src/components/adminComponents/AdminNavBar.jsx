@@ -28,12 +28,11 @@ export const AdminNavBar = () => {
                 <NavLink to="/" className="nav-logo"><img src='/logo.png' alt=''></img></NavLink>
                 <ul className={click ? "nav-menu active" : "nav-menu"}>
                     <li className="nav-item"><NavLink className='nav-links' onClick={handleClick} to="/">Dashboard</NavLink></li>
-                    <li className="nav-item"><NavLink className='nav-links' onClick={handleClick} to="/rankings">Rankings</NavLink></li>
                     <li className="nav-item"><NavLink className='nav-links' onClick={handleClick} to="/updateAthletes">Update athletes</NavLink></li>
                     <li className="nav-item"><NavLink className='nav-links' onClick={handleClick} to="/viewPayments">View payments</NavLink></li>
                     <li className="nav-item"><NavLink className='nav-links' onClick={handleClick} to="/viewMatches">View matches</NavLink></li>
                     <li className="nav-item"><NavLink className='nav-links' onClick={handleClick} to="/viewAthletesInfo">View athletes info</NavLink></li>
-                    <li className="nav-item"><NavLink className='nav-links' style={{color: "red"}} to="/" onClick={handleLogout}>Logout</NavLink></li>
+                    <li className="nav-item"><NavLink className='nav-links' onClick={handleLogout} style={{color: "red"}} to="/">Logout</NavLink></li>
                 </ul>
                 <div className="nav-icon" onClick={handleClick}>
                     {click ? <FontAwesomeIcon icon={ faXmark } /> : <FontAwesomeIcon icon={ faBars } />}

@@ -6,6 +6,7 @@ import axios from "axios";
 import "../../css/admin/DashBoard.css";
 import { useSelector } from "react-redux";
 import { ErrorMessage } from "../Notification.jsx";
+import { Rankings } from "../Rankings.jsx";
 
 export const DashBoard = () => {
     const [counter, setCounter] = useState("");
@@ -50,17 +51,22 @@ export const DashBoard = () => {
 
     return (
         <div className="dashboard-container">
-            <ErrorMessage msg={err} className={display}/>
+            <div className="error-container">
+                <ErrorMessage msg={err} className={display} />
+            </div>
             <div className="add-new-data">
                 <button onClick={handleClick} className="new-data">Add new year payments and attendances</button>
             </div>
             <div className="stats-container">
-                <LineChart />
-                <div className="stats">
-                    <PaymentsProgressBar />
-                    <VictoriesProgressBar />
-                    <div className="total-athletes-container">Total athletes <div className="total-athletes">{counter}</div></div>
+                <div className="li-stats">
+                    <LineChart />
+                    <div className="stats">
+                        <PaymentsProgressBar />
+                        <VictoriesProgressBar />
+                        <div className="total-athletes-container">Total athletes <div className="total-athletes">{counter}</div></div>
+                    </div>
                 </div>
+                <Rankings />
             </div>
         </div>
     )
