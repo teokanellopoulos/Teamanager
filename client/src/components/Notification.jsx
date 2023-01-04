@@ -6,9 +6,9 @@ export const ErrorMessage = ({msg, className}) => {
     )
 }
 
-export const SuccessMessage = (msg, display) => {
+export const SuccessMessage = ({msg, className}) => {
     return (
-        <div id="suc" style={{display: display}}>{msg}</div>
+        <div className={`error ${className ? "block" : "fade-out"}`}>{msg}</div>
     )
 }
 

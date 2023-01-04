@@ -2,6 +2,7 @@ import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import axios from "axios";
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
+import "../../css/athlete/PaymentForm.css";
 
 export const PaymentForm = () => {
     const stripe = useStripe();
@@ -37,17 +38,17 @@ export const PaymentForm = () => {
                 console.log(error);
             }
         } else {
-            console.log("Hello " + error.message);
+            window.location.href = "/payments";
         }
     }
 
     return (
-        <div>
-            Month: { location.state.month } <br/>
-            Year: { location.state.year } <br/>
-            <form onSubmit={handleSubmit}>
+        <div className="payment-container">
+            <h3>Enter your card data</h3>
+            <form onSubmit={handleSubmit} className="payment-form-user">
+                <div style={{marginBottom: "10px", color: "black"}}> Month to pay {location.state.month}/{location.state.year}</div>
                 <CardElement />
-                <button>Pay</button>
+                <button className="update">Pay</button>
             </form>
         </div>
     )

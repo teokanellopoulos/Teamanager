@@ -1,11 +1,12 @@
 footer {
     background-color: #001b29;
-    height: 150px;
+    height: 140px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     box-shadow: 1px 0px 0px 2px rgba(0, 61, 92, 0.74);
+    margin-top: 10px;
 }
 
 .contact-info {

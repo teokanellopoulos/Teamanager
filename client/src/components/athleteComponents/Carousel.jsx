@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { useEffect } from "react";
 
 export const Carousel = () => {
     const [currentIndex, setCurrentIndex] = useState(0);

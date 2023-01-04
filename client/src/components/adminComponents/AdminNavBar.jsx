@@ -27,7 +27,6 @@ export const AdminNavBar = () => {
             <div className="nav-container">
                 <NavLink to="/" className="nav-logo"><img src='/logo.png' alt=''></img></NavLink>
                 <ul className={click ? "nav-menu active" : "nav-menu"}>
-                    <li className="nav-item"><NavLink className='nav-links' onClick={handleClick} to="/">Dashboard</NavLink></li>
                     <li className="nav-item"><NavLink className='nav-links' onClick={handleClick} to="/updateAthletes">Update athletes</NavLink></li>
                     <li className="nav-item"><NavLink className='nav-links' onClick={handleClick} to="/viewPayments">View payments</NavLink></li>
                     <li className="nav-item"><NavLink className='nav-links' onClick={handleClick} to="/viewMatches">View matches</NavLink></li>

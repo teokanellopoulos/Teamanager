@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from "axios";
+import { ErrorMessage } from "../Notification.jsx";
 import { useSelector } from "react-redux";
 import "../../css/admin/ViewPayments.css";
 import { useEffect } from "react";
@@ -18,6 +19,8 @@ export const ViewPayments = () => {
     const [payments, setPayments] = useState([]);
     const [nonPayers, setNonPayers] = useState([]);
     const token = useSelector(state => state.token);
+    const [err, setErr] = useState("");
+    const [display, setDisplay] = useState(true);
 
     const { month, year } = input;
 
@@ -40,6 +43,8 @@ export const ViewPayments = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            setDisplay(true);
+            setErr("");
             const res = await axios.get("/payment/getPayments", {
                 params: {
                     month: month,
@@ -50,7 +55,12 @@ export const ViewPayments = () => {
 
             setPayments(res.data);
         } catch (error) {
-            window.location.href = "/viewPayments";
+            if (error.response.data.msg === "Invalid token") {
+                window.location.href = "/viewPayments";
+            } else {
+                setErr(error.response.data.msg);
+                setDisplay(false);
+            }
         }
     }
 
@@ -65,6 +75,7 @@ export const ViewPayments = () => {
 
     return (
         <div className="payments-container">
+            <ErrorMessage msg={err} className={display} />
             <label>Check to see monthly payments, uncheck to see all who haven't payed
                 <input
                     type="checkbox"
@@ -84,7 +95,6 @@ export const ViewPayments = () => {
                             <input
                                 type="number"
                                 min="1"
-                                max="12"
                                 name="month"
                                 required
                                 value={month}
@@ -94,7 +104,6 @@ export const ViewPayments = () => {
                             Enter year (starting from 2022)<br />
                             <input
                                 type="number"
-                                min="2022"
                                 name="year"
                                 required
                                 value={year}
@@ -111,7 +120,7 @@ export const ViewPayments = () => {
                                     animate={{ opacity: 1, translateX: 0 }}
                                     transition={{ duration: 0.5, delay: i * 0.1 }}
                                     className="payment-card"
-                                    style={{backgroundColor: payment.paid ? "#116a0b" : "#920e0e"}}
+                                    style={{ backgroundColor: payment.paid ? "#116a0b" : "#920e0e" }}
                                 >
                                     {i + 1}.
                                     <div className="card-data-payment">
@@ -133,6 +142,7 @@ export const ViewPayments = () => {
                                     animate={{ opacity: 1, translateX: 0 }}
                                     transition={{ duration: 0.5, delay: i * 0.1 }}
                                     className="payment-card"
+                                    style={{ backgroundColor: nonPayer.paid ? "#116a0b" : "#920e0e" }}
                                 >
                                     {i + 1}.
                                     <div className="card-data-payment">

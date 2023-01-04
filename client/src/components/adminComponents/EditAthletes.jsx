@@ -38,14 +38,14 @@ export const EditAthletes = () => {
 
     return (
         <div className="updateList">
-            {athletes.length !== 0 ? athletes.map((athlete, i) =>
+            {athletes.length !== 0 && attendances.length !== 0 ? athletes.map((athlete, i) =>
                 <EditAthlete
                     key={i}
                     count={i}
                     attendance={attendances.find((attendance) => attendance.koeCode === athlete.koeCode)}
                     athlete={athlete}
                 />) :
-                <div className="no-data">No athletes</div>}
+                <div className="no-data">No available data</div>}
         </div>
     )
 }

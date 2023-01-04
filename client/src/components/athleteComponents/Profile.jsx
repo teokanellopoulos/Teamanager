@@ -36,7 +36,8 @@ export const Profile = () => {
             await axios.patch("/athlete/updateProfile", {
                 fullName: fullName ? fullName : athlete.fullName,
                 yob: yob ? yob : athlete.yob,
-                phone: phone ? phone : athlete.phone
+                phone: phone ? phone : athlete.phone,
+                koeCode: athlete.koeCode
             }, {
                 headers: { Authorization: token }
             });

@@ -46,13 +46,13 @@ export const EditAthlete = ({ athlete, attendance, count }) => {
             transition={{ duration: 0.5, delay: count * 0.1 }}
             className="editCard"
         >
-            <p className="count">{count+1}.</p>
+            <p className="count">{count + 1}.</p>
             <div className="userData">
                 <p><FontAwesomeIcon icon={faUser} /> {athlete.fullName}</p>
                 <p><FontAwesomeIcon icon={faIdCard} /> {attendance.koeCode}</p>
             </div>
             <form onSubmit={handleSubmit}>
-                Attendances for { date.getMonth() + 1}/{date.getFullYear()}<br/>
+                Attendances for {date.getMonth() + 1}/{date.getFullYear()}<br />
                 <input
                     type="number"
                     min="0"
@@ -62,7 +62,7 @@ export const EditAthlete = ({ athlete, attendance, count }) => {
                     onChange={handleInput1}
                     required
                 /><br />
-                Latest Sprint<br/>
+                Latest Sprint<br />
                 <input
                     type="number"
                     min="0"
@@ -73,7 +73,7 @@ export const EditAthlete = ({ athlete, attendance, count }) => {
                     onChange={handleInput2}
                     required
                 /><br />
-                <Button/>
+                <Button />
             </form>
         </motion.div>
     )

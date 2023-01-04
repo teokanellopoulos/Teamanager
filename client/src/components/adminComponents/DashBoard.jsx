@@ -5,13 +5,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "../../css/admin/DashBoard.css";
 import { useSelector } from "react-redux";
-import { ErrorMessage } from "../Notification.jsx";
+import { ErrorMessage, SuccessMessage } from "../Notification.jsx";
 import { Rankings } from "../Rankings.jsx";
 
 export const DashBoard = () => {
     const [counter, setCounter] = useState("");
     const [results, setResults] = useState("");
     const [err, setErr] = useState("");
+    const [suc, setSuc] = useState(false);
     const [display, setDisplay] = useState(true);
     const token = useSelector(state => state.token);
 
@@ -39,12 +40,20 @@ export const DashBoard = () => {
             setErr("");
             setDisplay(true);
             await axios.post("/athlete/newYearPaymentsAndAttendances", {}, { headers: { Authorization: token } });
+            if (!err) {
+                setSuc("New data inserted");
+                setSuc(true)
+                setTimeout(() => {
+                    setSuc(false);
+                }, 3000);
+            }
         } catch (error) {
             if (error.response.data.msg === "Invalid token") {
                 window.location.href = `/`;
             } else {
                 setErr(error.response.data.msg);
                 setDisplay(false);
+                setSuc(false);
             }
         }
     }
@@ -55,7 +64,7 @@ export const DashBoard = () => {
                 <ErrorMessage msg={err} className={display} />
             </div>
             <div className="add-new-data">
-                <button onClick={handleClick} className="new-data">Add new year payments and attendances</button>
+                <button onClick={handleClick} className="new-data" style={{ backgroundColor: suc ? "green" : "#558ca5" }}>{suc ? "New data added" : "Add new year payments and attendances"}</button>
             </div>
             <div className="stats-container">
                 <div className="li-stats">

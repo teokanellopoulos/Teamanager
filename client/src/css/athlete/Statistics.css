@@ -1,0 +1,28 @@
+.athlete-stats-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.athlete-stats {
+    width: 40%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.astats {
+    margin: 10px;
+}
+
+@media only screen and (max-width: 1500px) {
+    .athlete-stats-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .athlete-stats {
+        width: 100%;
+        justify-content: space-evenly;
+    }
+}

@@ -6,7 +6,6 @@ import { NotFound } from "./NotFound.jsx";
 import { Profile } from "./athleteComponents/Profile.jsx";
 import { AthleteMainPage } from "./athleteComponents/AthleteMainPage.jsx";
 import { DashBoard } from "./adminComponents/DashBoard.jsx";
-import { Rankings } from "./Rankings.jsx";
 import { EditAthletes } from "./adminComponents/EditAthletes.jsx";
 import { ViewPayments } from "./adminComponents/ViewPayments.jsx";
 import { ViewMatches } from "./adminComponents/ViewMatches.jsx";

@@ -157,7 +157,7 @@ const athleteController = {
     },
     updateProfile: async (req, res) => {
         try {
-            const { fullName, phone, yob } = req.body;
+            const { fullName, phone, yob, koeCode } = req.body;
 
             if(yob < 1980 || yob > 2030)
                 return res.status(400).json({msg: "Year of birth must be between 1980 - 2030"});
@@ -166,7 +166,8 @@ const athleteController = {
                 fullName, phone, yob
             });
 
-            await payments.updateMany({aid: req.athlete.id}, { fullName });
+            await payments.updateMany({koeCode: koeCode}, { fullName });
+            await attendances.updateMany({koeCode: koeCode}, { fullName });
 
             res.status(200).json({msg: "Athlete updated"});
         } catch (error) {

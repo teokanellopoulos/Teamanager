@@ -4,7 +4,10 @@ import { motion } from "framer-motion";
 import "../css/Rankings.css";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBullseye, faUser, faIdCard, faMedal, faStopwatch, faCalendarCheck } from "@fortawesome/free-solid-svg-icons";
+import {
+    faBullseye, faUser, faIdCard, faMedal, faStopwatch, faCalendarCheck, faCaretDown, faCaretUp,
+    faChartLine
+} from "@fortawesome/free-solid-svg-icons";
 
 export const Rankings = () => {
     const [sprintRanking, setSprintRanking] = useState([]);
@@ -12,6 +15,9 @@ export const Rankings = () => {
     const [attendanceRanking, setAttendanceRanking] = useState([]);
     const token = useSelector(state => state.token);
     const [choice, setChoice] = useState("attendances");
+    const auth = useSelector(state => state.auth);
+    const { athlete } = auth;
+    const [code, setCode] = useState();
 
     const handleChange = (event) => {
         setChoice(event.target.value);
@@ -31,17 +37,17 @@ export const Rankings = () => {
                 const attendanceRankings = await axios.get("/attendance/getTotalAttendances", {
                     headers: { Authorization: token }
                 });
-
                 setSprintRanking(res.data.sort((a, b) => a.avgSprint - b.avgSprint));
                 setGoalRanking(goalRankings.data);
                 setAttendanceRanking(attendanceRankings.data);
+                setCode(athlete.koeCode)
             } catch (error) {
                 window.location.href = "/";
             }
         }
         getAthletes();
         // eslint-disable-next-line
-    }, []);
+    }, [athlete.koeCode]);
 
     return (
         <div className="rank-container">
@@ -57,63 +63,78 @@ export const Rankings = () => {
                 {
                     choice === "attendances" ?
                         attendanceRanking.length !== 0 ?
-                            attendanceRanking.map((athlete, i) =>
+                            attendanceRanking.map((ath, i) =>
                                 <motion.div
                                     key={i}
                                     className="card"
                                     initial={{ opacity: 0, translateX: -50 }}
                                     animate={{ opacity: 1, translateX: 0 }}
                                     transition={{ duration: 0.5, delay: i * 0.1 }}
+                                    style={{ backgroundColor: ath._id.koeCode === code ? "#215268" : "#062433" }}
                                 >
                                     {i + 1}. &nbsp;
-                                    <div className="avatar">{athlete._id.fullName.split(" ").map((word) => word.charAt(0).toUpperCase())}</div>
+                                    <div className="avatar">{ath._id.fullName.split(" ").map((word) => word.charAt(0).toUpperCase())}</div>
                                     <div className="content">
-                                        <p className="name"><FontAwesomeIcon icon={faUser} />&nbsp;{athlete._id.fullName}</p>
-                                        <p><FontAwesomeIcon icon={faIdCard} />&nbsp;{athlete._id.koeCode}</p>
-                                        <p><FontAwesomeIcon icon={faCalendarCheck} />&nbsp;{athlete.totalAttendances}</p>
+                                        <p className="name"><FontAwesomeIcon icon={faUser} />&nbsp;{ath._id.fullName}</p>
+                                        <p><FontAwesomeIcon icon={faIdCard} />&nbsp;{ath._id.koeCode}</p>
+                                        <p><FontAwesomeIcon icon={faCalendarCheck} />&nbsp;{ath.totalAttendances}</p>
                                     </div>
-                                    <FontAwesomeIcon className="medal" icon={faMedal} />
-                                </motion.div>)
-                        : <div className="no-data">No athletes</div>
-                    : choice === "goals" ?
-                        goalRanking.length !== 0 ?
-                            goalRanking.map((athlete, i) =>
-                                <motion.div
-                                    className="card"
-                                    key={i}
-                                    initial={{ opacity: 0, translateX: -50 }}
-                                    animate={{ opacity: 1, translateX: 0 }}
-                                    transition={{ duration: 0.5, delay: i * 0.1 }}
-                                >
-                                    {i + 1}. &nbsp;
-                                    <div className="avatar">{athlete._id.fullName.split(" ").map((word) => word.charAt(0).toUpperCase())}</div>
-                                    <div className="content">
-                                        <p className="name"><FontAwesomeIcon icon={faUser} />&nbsp;{athlete._id.fullName}</p>
-                                        <p><FontAwesomeIcon icon={faIdCard} />&nbsp;{athlete._id.koeCode}</p>
-                                        <p><FontAwesomeIcon icon={faBullseye} />&nbsp;{athlete.totalGoals}</p>
+                                    <div className="icons">
+                                        <FontAwesomeIcon className="medal" icon={faMedal} />
                                     </div>
-                                    <FontAwesomeIcon className="medal" icon={faMedal} />
                                 </motion.div>)
-                        : <div className="no-data">Athletes haven't scored yet</div>
-                    : sprintRanking.length !== 0 ? 
-                        sprintRanking.map((athlete, i) =>
-                            <motion.div
-                                key={i}
-                                className="card"
-                                initial={{ opacity: 0, translateX: -50 }}
-                                animate={{ opacity: 1, translateX: 0 }}
-                                transition={{ duration: 0.5, delay: i * 0.1 }}
-                            >
-                                {i + 1}. &nbsp;
-                                <div className="avatar">{athlete.fullName.split(" ").map((word) => word.charAt(0).toUpperCase())}</div>
-                                <div className="content">
-                                    <p className="name"><FontAwesomeIcon icon={faUser} />&nbsp;{athlete.fullName}</p>
-                                    <p><FontAwesomeIcon icon={faIdCard} />&nbsp;{athlete.koeCode}</p>
-                                    <p><FontAwesomeIcon icon={faStopwatch} />&nbsp;{athlete.avgSprint}</p>
-                                </div>
-                                <FontAwesomeIcon className="medal" icon={faMedal} />
-                            </motion.div>)
-                    : <div className="no-data">No athletes</div>
+                            : <div className="no-data">No athletes</div>
+                        : choice === "goals" ?
+                            goalRanking.length !== 0 ?
+                                goalRanking.map((ath, i) =>
+                                    <motion.div
+                                        className="card"
+                                        key={i}
+                                        initial={{ opacity: 0, translateX: -50 }}
+                                        animate={{ opacity: 1, translateX: 0 }}
+                                        transition={{ duration: 0.5, delay: i * 0.1 }}
+                                        style={{ backgroundColor: ath._id.koeCode === code ? "#215268" : "#062433" }}
+                                    >
+                                        {i + 1}. &nbsp;
+                                        <div className="avatar">{ath._id.fullName.split(" ").map((word) => word.charAt(0).toUpperCase())}</div>
+                                        <div className="content">
+                                            <p className="name"><FontAwesomeIcon icon={faUser} />&nbsp;{ath._id.fullName}</p>
+                                            <p><FontAwesomeIcon icon={faIdCard} />&nbsp;{ath._id.koeCode}</p>
+                                            <p><FontAwesomeIcon icon={faBullseye} />&nbsp;{ath.totalGoals}</p>
+                                        </div>
+                                        <div className="icons">
+                                            <FontAwesomeIcon className="medal" icon={faMedal} />
+                                        </div>
+                                    </motion.div>)
+                                : <div className="no-data">Athletes haven't scored yet</div>
+                            : sprintRanking.length !== 0 ?
+                                sprintRanking.map((ath, i) =>
+                                    <motion.div
+                                        key={i}
+                                        className="card"
+                                        initial={{ opacity: 0, translateX: -50 }}
+                                        animate={{ opacity: 1, translateX: 0 }}
+                                        transition={{ duration: 0.5, delay: i * 0.1 }}
+                                        style={{ backgroundColor: ath.koeCode === code ? "#15689c" : "#062433" }}
+                                    >
+                                        {i + 1}. &nbsp;
+                                        <div className="avatar">{ath.fullName.split(" ").map((word) => word.charAt(0).toUpperCase())}</div>
+                                        <div className="content">
+                                            <p className="name"><FontAwesomeIcon icon={faUser} />&nbsp;{ath.fullName}</p>
+                                            <p><FontAwesomeIcon icon={faIdCard} />&nbsp;{ath.koeCode}</p>
+                                            <p><FontAwesomeIcon icon={faChartLine} />&nbsp;{ath.avgSprint}</p>
+                                            <p><FontAwesomeIcon icon={faStopwatch} />&nbsp;{ath.lastSprint}</p>
+                                        </div>
+                                        <div className="icons">
+                                            <FontAwesomeIcon className="medal" icon={faMedal} />
+                                            {
+                                                parseFloat(ath.avgSprint) >= parseFloat(ath.lastSprint) ?
+                                                    <FontAwesomeIcon icon={faCaretUp} style={{ color: "#06b814", height: "30px" }} /> :
+                                                    <FontAwesomeIcon icon={faCaretDown} style={{ color: "red", height: "30px" }} />
+                                            }
+                                        </div>
+                                    </motion.div>)
+                                : <div className="no-data">No athletes</div>
                 }
             </div>
         </div>

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
+import "../../css/athlete/Events.css";
 import format from "date-fns/format";
 import parse from 'date-fns/parse';
 import startOfWeek from 'date-fns/startOfWeek';
@@ -26,16 +27,16 @@ export const Events = () => {
     const token = useSelector(state => state.token);
     const auth = useSelector(state => state.auth);
     const { athlete } = auth;
-    const id = athlete._id;
+    const koeCode = athlete.koeCode;
 
     useEffect(() => {
         const getMatches = async () => {
-            if (id) {
+            if (koeCode) {
                 const events = []
                 try {
                     const res = await axios.get("/match/getParticipations", {
                         params: {
-                            id
+                            koeCode
                         },
                         headers: { Authorization: token }
                     });
@@ -56,17 +57,19 @@ export const Events = () => {
         }
         getMatches();
         // eslint-disable-next-line
-    }, [auth.athlete._id]);
+    }, [koeCode]);
 
     return (
-        <div>
-            <Calendar
-                localizer={localizer}
-                events={events}
-                startAccessor="start"
-                endAccessor="end"
-                style={{height: 500}}
-            />
+        <div className="calendar-container">
+            <div className="calendar">
+                <Calendar
+                    localizer={localizer}
+                    events={events}
+                    startAccessor="start"
+                    endAccessor="end"
+                    style={{ height: 500 }}
+                />
+            </div>
         </div>
     )
 }

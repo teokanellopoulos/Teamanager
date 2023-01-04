@@ -76,9 +76,10 @@ export const CreateMatch = () => {
             }
         }
     }
-
+    
     return (
         <div className="match-container">
+            <ErrorMessage msg={err} className={display} />
             <h3 className="header">Create match</h3>
             <form onSubmit={handleSubmit} className="match-form">
                 <p>Opponent name</p>
@@ -101,8 +102,6 @@ export const CreateMatch = () => {
                 /><br />
                 <button className="create-match">Create match</button>
             </form><br />
-
-            <ErrorMessage msg={err} className={display} />
 
             <h3 className="header">Add Participants</h3>
             {athletes.length === 0 ? <p>No athletes</p> :

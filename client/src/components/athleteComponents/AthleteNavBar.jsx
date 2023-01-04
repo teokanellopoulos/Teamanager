@@ -35,7 +35,7 @@ export const AthleteNavBar = () => {
                         <li className="nav-item"><NavLink className="nav-links" onClick={handleClick} to="/participations">Participations</NavLink><br /></li>
                         <li className="nav-item"><NavLink className="nav-links" onClick={handleClick} to="/events">Events</NavLink><br /></li>
                         <li className="nav-item"><NavLink className="nav-links" onClick={handleClick} to="/payments">Payments</NavLink><br /></li>
-                        <li className="nav-item"><NavLink className="nav-links" onClick={handleClick} style={{color: "yellow"}} to="/profile">{athlete.fullName}</NavLink></li>
+                        <li className="nav-item"><NavLink className="nav-links" onClick={handleClick} style={{color: "yellow"}} to="/profile">{athlete.fullName} {athlete.koeCode}</NavLink></li>
                         <li className="nav-item"><NavLink className="nav-links" to="/" style={{color: "red"}} onClick={handleLogout}>Logout</NavLink></li>
                     </> :
                         <li className="nav-item"><NavLink className="nav-links" onClick={handleClick} to="/login">Login</NavLink></li>}

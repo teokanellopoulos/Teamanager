@@ -1,6 +1,5 @@
 .rank-container {
     width: 45%;
-    margin: auto;
     margin-top: 2rem;
 }
 
@@ -21,8 +20,8 @@ select {
 
 .card {
     background-color: #062433;
-    padding: 19px;
-    height: 45px;
+    padding: 21px;
+    height: 55px;
     margin: 10px;
     border-radius: 8px;
     display: flex;
@@ -55,8 +54,14 @@ p {
 
 .medal {
     display: none;
-    height: 30px;
+    height: 35px;
+    margin-right: 5px;
+}
+
+.icons {
+    display: flex;
     margin-left: auto;
+    align-items: center;
 }
 
 .list .card:first-child .medal{

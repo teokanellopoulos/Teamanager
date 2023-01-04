@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { motion } from "framer-motion";
+import { faIdCard, faBullseye, faUser } from "@fortawesome/free-solid-svg-icons";
 
 export const Participations = () => {
     const [participations, setParticipations] = useState([]);
@@ -40,24 +43,94 @@ export const Participations = () => {
     }
 
     return (
-        <div>
+        <div className="match-list">
+            <label>
+                Check the box to see all matches, uncheck to view participations
+                <input
+                    type="checkbox"
+                    name="choice"
+                    value="choice"
+                    checked={checked}
+                    onChange={handleCheck}
+                /><br />
+            </label>
+
             {
                 checked ?
                     matches.length !== 0 ?
-                        matches.map((match, i) => <p key={i}>Keratsini VS {match.opponent}</p>) :
-                    <p>No matches have been made</p>
-                :   participations.length !== 0 ?
-                        participations.map((match, i) => <p key={i}>Keratsini VS {match.opponent}</p>) :
-                    <p>You have no participations</p>
+                        matches.map((match, i) => <motion.div
+                            key={i}
+                            initial={{ opacity: 0, translateX: -50 }}
+                            animate={{ opacity: 1, translateX: 0 }}
+                            transition={{ duration: 0.5, delay: i * 0.1 }}
+                            className={match.result}
+                        >
+                            <div className="count">{i + 1}.</div>
+                            <div>
+                                <h3>Keratsini VS {match.opponent}</h3>
+                                <p>Date: {match.date.split("T")[0]}</p>
+                                <p>Score: {match.teamGoals} - {match.opponentGoals}</p>
+                                <p>Result: {match.result}</p>
+                                <details>
+                                    <summary>Participants</summary>
+                                    <div className="participants-list">
+                                        {
+                                            match.participants.map((participant, j) =>
+                                                <div className="participant-card" key={j}>
+                                                    {j + 1}.
+                                                    <div className="card-data">
+                                                        <FontAwesomeIcon icon={faUser} /> {participant.fullName}<br />
+                                                        <FontAwesomeIcon icon={faIdCard} /> {participant.koeCode}<br />
+                                                        <FontAwesomeIcon icon={faBullseye} /> {participant.goals}
+                                                    </div>
+                                                </div>
+                                            )
+                                        }
+                                    </div>
+                                </details>
+                            </div>
+                            <div style={{ height: "5px", width: "50px" }}>
+                            </div>
+                        </motion.div>) :
+                        <p>No matches have been made</p>
+                    : participations.length !== 0 ?
+                        participations.map((match, i) =>  <motion.div
+                        key={i}
+                        initial={{ opacity: 0, translateX: -50 }}
+                        animate={{ opacity: 1, translateX: 0 }}
+                        transition={{ duration: 0.5, delay: i * 0.1 }}
+                        className={match.result}
+                    >
+                        <div className="count">{i + 1}.</div>
+                        <div>
+                            <h3>Keratsini VS {match.opponent}</h3>
+                            <p>Date: {match.date.split("T")[0]}</p>
+                            <p>Score: {match.teamGoals} - {match.opponentGoals}</p>
+                            <p>Result: {match.result}</p>
+                            <details>
+                                <summary>Participants</summary>
+                                <div className="participants-list">
+                                    {
+                                        match.participants.map((participant, j) =>
+                                            <div className="participant-card" key={j}>
+                                                {j + 1}.
+                                                <div className="card-data">
+                                                    <FontAwesomeIcon icon={faUser} /> {participant.fullName}<br />
+                                                    <FontAwesomeIcon icon={faIdCard} /> {participant.koeCode}<br />
+                                                    <FontAwesomeIcon icon={faBullseye} /> {participant.goals}
+                                                </div>
+                                            </div>
+                                        )
+                                    }
+                                </div>
+                            </details>
+                        </div>
+                        <div style={{ height: "5px", width: "50px" }}>
+                        </div>
+                    </motion.div>) :
+                        <p>You have no participations</p>
             }
-            Check the box to see all the matches
-            <input
-                type="checkbox"
-                name="choice"
-                value="choice"
-                checked={checked}
-                onChange={handleCheck}
-            /><br />
+
         </div>
     )
 }

@@ -60,6 +60,7 @@ export const Register = () => {
                     placeholder="Enter year of birth"
                     value={yob}
                     name="yob"
+                    min="1980"
                     onChange={handleInput}
                     required
                     className="text-field"

@@ -5,6 +5,10 @@
     margin-top: 50px;
 }
 
+.no-data {
+    margin-top: 10px;
+}
+
 .edit:hover {
     color: #81a8bb;;
 }

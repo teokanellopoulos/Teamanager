@@ -1,4 +1,6 @@
 const matches = require("../models/matchModel.js");
+const athletes = require("../models/athleteModel.js");
+
 
 const matchController = {
     createMatch: async (req, res) => {
@@ -8,7 +10,7 @@ const matchController = {
             if (!opponent || !date)
                 return res.status(400).json({ msg: "Please fill in all fields" });
 
-            if (participants.length < 1 || participants.length > 15)
+            if (participants.length < 7 || participants.length > 15)
                 return res.status(400).json({ msg: "You must put 7-15 participants in the match" });
 
             const match = await matches.findOne({ opponent, date });
@@ -43,7 +45,7 @@ const matchController = {
             if (!opponent || !date)
                 return res.status(400).json({ msg: "Please fill in all fields" });
 
-            if (participants.length < 1 || participants.length > 15)
+            if (participants.length < 7 || participants.length > 15)
                 return res.status(400).json({ msg: "You must put 7-15 participants in the match" });
 
             const original = await matches.findOne({ _id });
@@ -80,6 +82,15 @@ const matchController = {
                     }
                 }
             ]);
+
+            const allAthletes = await athletes.find({ role: { $ne: 1 } });
+
+            for (let i = 0; i < allAthletes.length; i++) {
+                if (rankings.filter(ranking => ranking._id.koeCode === allAthletes[i].koeCode).length === 0) {
+                    rankings.push({ _id: { koeCode: allAthletes[i].koeCode, fullName: allAthletes[i].fullName }, totalGoals: 0 });
+                }
+            }
+
             res.status(200).json(rankings.sort((a, b) => b.totalGoals - a.totalGoals));
         } catch (error) {
             return res.status(500).json({ msg: error.message });
@@ -89,7 +100,7 @@ const matchController = {
         try {
             const { _id } = req.body;
             await matches.findByIdAndDelete({ _id });
-            res.status(200).json({msg: "Match deleted"});
+            res.status(200).json({ msg: "Match deleted" });
         } catch (error) {
             return res.status(500).json({ msg: error.message });
         }
@@ -97,10 +108,10 @@ const matchController = {
     getVictoriesPercentage: async (req, res) => {
         try {
             const all = await matches.find().count();
-            
-            const victories = await matches.find({result: "victory"}).count();
 
-            if(all === 0)
+            const victories = await matches.find({ result: "victory" }).count();
+
+            if (all === 0)
                 return res.status(200).json(0);
 
             const percentage = victories / all;
@@ -111,8 +122,8 @@ const matchController = {
     },
     getParticipations: async (req, res) => {
         try {
-            const id = req.query.id;
-            const participations = await matches.find({ participants: {$elemMatch: { koeCode: id }} });
+            const koeCode = req.query.koeCode;
+            const participations = await matches.find({ participants: { $elemMatch: { koeCode: parseInt(koeCode) } } });
             res.status(200).json(participations);
         } catch (error) {
             return res.status(500).json({ msg: error.message });
