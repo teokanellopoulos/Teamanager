@@ -1,5 +1,6 @@
 const athletes = require("../models/athleteModel.js");
 const payments = require("../models/paymentModel.js");
+const matches = require("../models/matchModel.js");
 const attendances = require("../models/attendanceModel.js");
 const jwt = require("jsonwebtoken");
 const date = new Date();
@@ -168,6 +169,9 @@ const athleteController = {
 
             await payments.updateMany({koeCode: koeCode}, { fullName });
             await attendances.updateMany({koeCode: koeCode}, { fullName });
+            await matches.updateMany({}, { $set: { "participants.$[participant].fullName": fullName}}, 
+                { arrayFilters: [ { "participant.koeCode": koeCode } ] 
+            });
 
             res.status(200).json({msg: "Athlete updated"});
         } catch (error) {

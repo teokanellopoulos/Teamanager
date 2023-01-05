@@ -101,7 +101,7 @@ export const ViewPayments = () => {
                                 onChange={handleChange}
                                 className="number-field"
                             /><br />
-                            Enter year (starting from 2022)<br />
+                            Enter year (starting from 2020)<br />
                             <input
                                 type="number"
                                 name="year"

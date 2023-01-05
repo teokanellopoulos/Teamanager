@@ -73,6 +73,8 @@ export const Profile = () => {
                     placeholder="Change phone"
                     defaultValue={athlete.phone}
                     name="phone"
+                    maxLength="10"
+                    minLength="10"
                     className="text-field"
                     onChange={handleInput}
                 /><br />

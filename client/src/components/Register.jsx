@@ -70,6 +70,8 @@ export const Register = () => {
                     placeholder="Enter phone"
                     value={phone}
                     name="phone"
+                    maxLength="10"
+                    minLength="10"
                     onChange={handleInput}
                     required
                     className="text-field"

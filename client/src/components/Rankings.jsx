@@ -115,7 +115,7 @@ export const Rankings = () => {
                                         initial={{ opacity: 0, translateX: -50 }}
                                         animate={{ opacity: 1, translateX: 0 }}
                                         transition={{ duration: 0.5, delay: i * 0.1 }}
-                                        style={{ backgroundColor: ath.koeCode === code ? "#15689c" : "#062433" }}
+                                        style={{ backgroundColor: ath.koeCode === code ? "#215268" : "#062433" }}
                                     >
                                         {i + 1}. &nbsp;
                                         <div className="avatar">{ath.fullName.split(" ").map((word) => word.charAt(0).toUpperCase())}</div>

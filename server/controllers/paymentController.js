@@ -17,7 +17,7 @@ const paymentController = {
                 return res.status(400).json({ msg: "Month must be between 1 - 12" });
 
             if (year < 2019)
-                return res.status(400).json({ msg: "Year must be 2019 and up" });
+                return res.status(400).json({ msg: "Year must be 2020 and up" });
 
             const results = await payments.find({
                 $and: [

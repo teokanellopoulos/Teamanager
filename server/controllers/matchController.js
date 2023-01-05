@@ -124,7 +124,7 @@ const matchController = {
         try {
             const koeCode = req.query.koeCode;
             const participations = await matches.find({ participants: { $elemMatch: { koeCode: parseInt(koeCode) } } });
-            res.status(200).json(participations);
+            res.status(200).json(participations.sort((a,b) => new Date(b.date) - new Date(a.date)));
         } catch (error) {
             return res.status(500).json({ msg: error.message });
         }

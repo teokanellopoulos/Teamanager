@@ -22,8 +22,11 @@ const matchSchema = new mongoose.Schema({
         required: true
     },
     participants: {
-        type: Array,
-        default: []
+        type: [{
+            koeCode: Number,
+            fullName: String,
+            goals: Number
+        }]
     }
 });
 
