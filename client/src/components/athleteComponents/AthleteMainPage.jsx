@@ -1,4 +1,5 @@
-import { Carousel } from "../athleteComponents/Carousel.jsx";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "../../css/athlete/Carousel.css";
 import { useSelector } from "react-redux";
 import { Statistics } from "./Statistics.jsx";
@@ -36,15 +37,31 @@ export const AthleteMainPage = () => {
 
     return (
         <div>
-            {!isLogged ? <div>
-                <Carousel />
-                <div className="intro-container">
-                    <p className="intro">
-                        &emsp;{text}<br/>
-                        <button onClick={handleClick} className="update">{buttonText}</button>
-                    </p>
-                </div>
-            </div> : <div><Statistics /></div>}
+            {!isLogged ?
+                <div>
+                    <div className="carousel-container">
+                        <Carousel className="carousel" showThumbs={false} interval={3000} autoPlay infiniteLoop>
+                            <div>
+                                <img src="1.jpg" />
+                            </div>
+                            <div>
+                                <img src="2.jpg" />
+                            </div>
+                            <div>
+                                <img src="3.jpg" />
+                            </div>
+                        </Carousel>
+                    </div>
+                    <div className="intro-container">
+                        <p className="intro">
+                            &emsp;{text}<br />
+                            <button onClick={handleClick} className="update">{buttonText}</button>
+                        </p>
+                    </div>
+                </div> :
+                <div>
+                    <Statistics />
+                </div>}
         </div>
 
     )

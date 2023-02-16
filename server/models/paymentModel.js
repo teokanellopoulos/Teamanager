@@ -23,7 +23,7 @@ const paymentSchema = new mongoose.Schema({
     },
     paid: {
         type: Boolean,
-        default: 0
+        default: false
     }
 });
 

@@ -7,6 +7,7 @@ footer {
     align-items: center;
     box-shadow: 1px 0px 0px 2px rgba(0, 61, 92, 0.74);
     margin-top: 10px;
+    padding: 10px 0px;
 }
 
 .contact-info {

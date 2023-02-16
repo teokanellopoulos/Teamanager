@@ -1,13 +1,18 @@
+.carousel-container {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
 .carousel {
-    width: 50%;
+    width: 512px;
+    height: 512px;
+    border-radius: 1rem;
 }
 
-.left:hover, .right:hover {
-    color: rgb(162, 162, 209);
-}
-
-@media only screen and (max-width: 800px){
+@media only screen and (max-width: 500px){
     .carousel {
+        height: calc(100vw * 0.9);
         width: 90%;
     }
 }

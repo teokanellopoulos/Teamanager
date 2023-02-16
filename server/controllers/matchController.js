@@ -1,7 +1,6 @@
 const matches = require("../models/matchModel.js");
 const athletes = require("../models/athleteModel.js");
 
-
 const matchController = {
     createMatch: async (req, res) => {
         try {
@@ -66,7 +65,7 @@ const matchController = {
                 opponent, teamGoals, opponentGoals, participants, date, result
             });
 
-            res.status(200).json({ msg: "Match created" });
+            res.status(200).json({ msg: "Match updated" });
         } catch (error) {
             return res.status(500).json({ msg: error.message });
         }
