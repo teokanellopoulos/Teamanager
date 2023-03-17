@@ -159,6 +159,7 @@ export const EditMatch = () => {
                                     className="number-field"
                                     onChange={(e) => handleChange(e, athlete)}
                                     name="goals"
+                                    min="0"
                                     defaultValue={participants.find(participant => participant.koeCode === athlete.koeCode).goals}
                                 />
                             </div>

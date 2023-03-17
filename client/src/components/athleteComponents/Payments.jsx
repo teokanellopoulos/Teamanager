@@ -90,7 +90,7 @@ export const Payments = () => {
                                     <FontAwesomeIcon icon={faUser} /> {payment.fullName}<br />
                                     <FontAwesomeIcon icon={faIdCard} /> {payment.koeCode}<br />
                                     <FontAwesomeIcon icon={faCalendarDays} /> {payment.month}/{payment.year}
-                                    <p>Status: {payment.paid ? "Paid" : "Haven't paid"}</p>
+                                    <p>Status: {payment.paid ? "Paid" : "Not paid"}</p>
                                 </div>
                                 <button onClick={() => handleClick(payment)} className="update" style={{marginLeft: "10px"}}>
                                     Pay month</button>

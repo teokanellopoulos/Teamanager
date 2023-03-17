@@ -41,6 +41,11 @@ const matchController = {
             let { _id, opponent, date, participants, opponentGoals, teamGoals } = req.body;
             let result = "";
 
+            let partipant = participants.find((participant) => participant.goals < 0);
+
+            if (partipant)
+                return res.status(400).json({ msg: "Athlete goals must not be a negative number" });
+
             if (!opponent || !date)
                 return res.status(400).json({ msg: "Please fill in all fields" });
 
