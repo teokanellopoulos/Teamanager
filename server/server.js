@@ -21,10 +21,6 @@ mongoose.connect("mongodb://localhost:27017/Teamanager", (error) => {
     console.log("Connected to mongoDB");
 });
 
-app.get("/hello", (req, res) => {
-    res.send("hello there");
-});
-
 app.listen(5000, () => {
     console.log("Server started on port 5000");
 })
