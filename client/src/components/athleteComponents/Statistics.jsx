@@ -50,7 +50,7 @@ export const Statistics = () => {
             <div className="athlete-stats">
                 <p className="total-athletes-container astats">Total goals <div className="total-athletes">{goals}</div></p>
                 <p className="total-athletes-container astats">Total attendances <div className="total-athletes">{attendances}</div></p>
-                <p className="total-athletes-container astats">Average sprint <div className="total-athletes">{avgSprint}</div></p>
+                <p className="total-athletes-container astats">Average sprint <div className="total-athletes">{avgSprint?.toFixed(2)}</div></p>
                 <p className="total-athletes-container astats">Total participations <div className="total-athletes">{participations}</div></p>
             </div>
             <Rankings />

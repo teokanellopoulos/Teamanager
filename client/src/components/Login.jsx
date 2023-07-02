@@ -43,7 +43,7 @@ export const Login = () => {
 
         google.accounts.id.renderButton(
             document.getElementById("signInDiv"),
-            { theme: "outline", size: "medium" }
+            { theme: "outline", size: "medium", text: "signin_with", locale: "EN" }
         )
         // eslint-disable-next-line
     }, []);
