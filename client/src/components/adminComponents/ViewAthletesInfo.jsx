@@ -42,7 +42,7 @@ export const ViewAthletesInfo = () => {
 
     return (
         <div className="table-container">
-            <CSVLink {...csvReport} enclosingCharacter={""} separator={" "}><button className="export">Export to CSV</button></CSVLink>
+            <CSVLink {...csvReport} enclosingCharacter={""} separator={","}><button className="export">Export to CSV</button></CSVLink>
             {
                 athletes.length !== 0 ?
                     <>
