@@ -61,37 +61,37 @@ export const LineChart = () => {
                             color: "red"
                         },
                         maintainAspectRatio: false,
-                            tension: 0.4,
-                            scales: {
-                                y: {
-                                    title: {
-                                        color: "#558ca5",
-                                        display: true,
-                                        text: 'Year total'
-                                    },
-                                    grid: {
-                                        color: '#558ca5',
-                                        borderColor: '#558ca5'
-                                    },
-                                    beginAtZero: true,
-                                    ticks: { color: "#558ca5" }
+                        tension: 0.4,
+                        scales: {
+                            y: {
+                                title: {
+                                    color: "#558ca5",
+                                    display: true,
+                                    text: 'Year total'
                                 },
-                                x: {
-                                    title: {
-                                        color: "#558ca5",
-                                        display: true,
-                                        text: 'Year'
-                                    },
-                                    grid: {
-                                        color: '#558ca5',
-                                        borderColor: '#558ca5'
-                                    },
-                                    ticks: { color: "#558ca5" }
-                                }
+                                grid: {
+                                    color: '#558ca5',
+                                    borderColor: '#558ca5'
+                                },
+                                beginAtZero: true,
+                                ticks: { color: "#558ca5" }
+                            },
+                            x: {
+                                title: {
+                                    color: "#558ca5",
+                                    display: true,
+                                    text: 'Year'
+                                },
+                                grid: {
+                                    color: '#558ca5',
+                                    borderColor: '#558ca5'
+                                },
+                                ticks: { color: "#558ca5" }
                             }
                         }
-                    } 
-                    />
+                    }
+                    }
+                />
             </div>
         )
     }

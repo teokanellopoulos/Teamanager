@@ -4,9 +4,6 @@ const matches = require("../models/matchModel.js");
 const attendances = require("../models/attendanceModel.js");
 const jwt = require("jsonwebtoken");
 const date = new Date();
-const { google } = require("googleapis");
-const { OAuth2 } = google.auth;
-const client = new OAuth2(process.env.CLIENT_ID);
 
 const athleteController = {
     register: async (req, res) => {
@@ -90,12 +87,13 @@ const athleteController = {
             
             res.cookie("refreshToken", refreshToken, {
                 httpOnly: true,
-                path: "/athlete/refreshToken",
+                path: "/",
                 maxAge: 7 * 24 * 60 * 60 * 1000
             });
 
             res.status(200).json({msg: "Login successful"});
         } catch (error) {
+            console.log(error)
             return res.status(500).json({msg: error.message});
         }
     },
@@ -112,6 +110,7 @@ const athleteController = {
             });
 
         } catch (error) {
+            console.log(error)
             return res.status(500).json({msg: error.message});
         }
     },
@@ -128,6 +127,7 @@ const athleteController = {
             const athletesList = await athletes.find({ role : { $ne : 1} }).select("-password -email -phone");
             res.status(200).json(athletesList);
         } catch (error) {
+            console.log(error)
             return res.status(500).json({msg: error.message});
         }
     },
@@ -149,7 +149,7 @@ const athleteController = {
     },
     logout: async (req, res) => {
         try {
-            res.clearCookie("refreshToken", {path: "/athlete/refreshToken"});
+            res.clearCookie("refreshToken", {path: "/"});
             
             return res.status(200).json({msg: "Logged out"});
         } catch (error) {
@@ -174,33 +174,6 @@ const athleteController = {
             });
 
             res.status(200).json({msg: "Athlete updated"});
-        } catch (error) {
-            return res.status(500).json({msg: error.message});
-        }
-    },
-    googleLogin: async (req, res) => {
-        try {
-            const { tokenId } = req.body;
-            const verify = await client.verifyIdToken({idToken: tokenId, requiredAudience: process.env.CLIENT_ID});
-            
-            const { email_verified, email } = verify.payload;
-
-            if(email_verified){
-                const athlete = await athletes.findOne({email});
-                if(athlete){
-                    const refreshToken = createRefreshToken({id: athlete._id});
-            
-                    res.cookie("refreshToken", refreshToken, {
-                        httpOnly: true,
-                        path: "/athlete/refreshToken",
-                        maxAge: 7 * 24 * 60 * 60 * 1000
-                    });
-                    return res.status(200).json({msg: "Login complete"});
-                }else 
-                    return res.status(400).json({msg: "Your email is not linked to a google account"});
-            }else
-                return res.status(400).json({msg: "Google login failed"});
-            
         } catch (error) {
             return res.status(500).json({msg: error.message});
         }

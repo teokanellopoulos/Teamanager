@@ -6,7 +6,11 @@ const cookieParser = require("cookie-parser");
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    credentials: true,  // Enable credentials (cookies)
+  };
+app.use(cors(corsOptions));
 app.use(cookieParser());
 
 //Routes
@@ -15,7 +19,7 @@ app.use("/payment", require("./routes/paymentRouter.js"));
 app.use("/match", require("./routes/matchRouter.js"));
 app.use("/attendance", require("./routes/attendanceRouter.js"));
 
-mongoose.connect("mongodb://localhost:27017/Teamanager", (error) => {
+mongoose.connect("mongodb://0.0.0.0:27017/Teamanager", (error) => {
     if(error)
         throw error;
     console.log("Connected to mongoDB");

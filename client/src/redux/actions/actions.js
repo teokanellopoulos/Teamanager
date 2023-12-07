@@ -7,11 +7,17 @@ export const dispatchLogIn = () => {
 }
 
 export const fetchAthlete = async (token) => {
-    const res = await axios.get("/athlete/athleteInfo", {
-        headers: {Authorization: token}
-    });
+    try {
+        const res = await axios.get("/athlete/athleteInfo", {
+            headers: { Authorization: token }
+        });
 
-    return res;
+        console.log(res)
+
+        return res;
+    } catch (error) {
+        console.log("This is error from redux" + error)
+    }
 }
 
 export const dispatchAthlete = (res) => {

@@ -18,7 +18,13 @@ export const AthleteNavBar = () => {
 
     const handleLogout = async () => {
         try {
-            await axios.get("/athlete/logout");
+            await fetch("http://localhost:5000/athlete/logout", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include"
+            });
             localStorage.removeItem("firstLogin");
             window.location.href = "/";
         } catch (error) {

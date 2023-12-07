@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "../../css/admin/DashBoard.css";
 import { useSelector } from "react-redux";
-import { ErrorMessage, SuccessMessage } from "../Notification.jsx";
+import { ErrorMessage } from "../Notification.jsx";
 import { Rankings } from "../Rankings.jsx";
 
 export const DashBoard = () => {

@@ -42,13 +42,13 @@ export const AthleteMainPage = () => {
                     <div className="carousel-container">
                         <Carousel className="carousel" showThumbs={false} interval={3000} autoPlay infiniteLoop>
                             <div>
-                                <img src="1.jpg" />
+                                <img src="1.jpg" alt=""/>
                             </div>
                             <div>
-                                <img src="2.jpg" />
+                                <img src="2.jpg" alt=""/>
                             </div>
                             <div>
-                                <img src="3.jpg" />
+                                <img src="3.jpg" alt=""/>
                             </div>
                         </Carousel>
                     </div>

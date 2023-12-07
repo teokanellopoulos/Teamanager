@@ -7,8 +7,8 @@ import axios from "axios";
 import "./App.css";
 import { dispatchLogIn, dispatchAthlete, fetchAthlete } from "./redux/actions/actions.js";
 import { AdminNavBar } from "./components/adminComponents/AdminNavBar.jsx";
-
 import { Footer } from "./components/athleteComponents/Footer.jsx";
+axios.defaults.baseURL = "http://localhost:5000";
 
 export const App = () => {
     const dispatch = useDispatch();
@@ -19,8 +19,25 @@ export const App = () => {
         const firstLogin = localStorage.getItem("firstLogin");
         if (firstLogin) {
             const getToken = async () => {
-                const res = await axios.post("/athlete/refreshToken", null);
-                dispatch({ type: "GET_TOKEN", payload: res.data.accessToken });
+                try {
+                    const response = await fetch("http://localhost:5000/athlete/refreshToken", {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        credentials: "include"
+                    });
+
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.msg);
+                    }
+                    dispatch({ type: "GET_TOKEN", payload: data.accessToken });
+                } catch (error) {
+                    console.log("This is error from app" + error.message)
+                }
             }
             getToken();
         }
