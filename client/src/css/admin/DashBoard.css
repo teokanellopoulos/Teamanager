@@ -1,0 +1,152 @@
+.wrapper {
+    background-color: #001b29;
+    border-radius: 10px;
+    height: 65%;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    padding: 5px;
+}
+
+.list {
+    height: 400px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.stats-container {
+    display: flex;
+    height: 10%;
+    justify-content: space-evenly; 
+    margin: 10px;
+}
+
+.li-stats {
+    width: 55%;
+}
+
+.total-athletes {
+    font-size: 100px;
+}
+
+.error-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.new-data {
+    width: 300px;
+    height: 30px;
+    background-color: #558ca5;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.add-new-data {
+    text-align: center;
+    margin: 8px;
+}
+
+.new-data:hover {
+    background-color: #7eb4cd;
+}
+
+.percentage {
+    margin-top: 6px;
+    width: 137px;
+}
+
+.payment-progress-bar, .victories-progress-bar, .total-athletes-container {
+    background-color: #001b29;
+    width: 250px;
+    height: 155px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
+.stats {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+@media only screen and (max-width: 1500px){
+    .stats-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .wrapper {
+        width: 96%;
+        height: 60vh;
+    }
+
+    .li-stats {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 96%;
+    }
+
+    .stats {
+        width: 96%;
+    }
+}
+
+@media only screen and (max-width: 1000px){
+    .stats-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .wrapper {
+        width: 96%;
+        height: 60vh;
+    }
+
+    .li-stats {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 96%;
+    }
+
+    .stats {
+        flex-direction: row;
+        width: 96%;
+        justify-content: space-between;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+    .payment-progress-bar, .victories-progress-bar, .total-athletes-container {
+        width: 210px;
+    }
+}
+
+@media only screen and (max-width: 800px){
+    .wrapper {
+        width: 90%;
+        height: 40vh;
+    }
+
+    .stats {
+        flex-direction: column;
+        width: 90%;
+        align-items: center;
+        margin-top: 0;
+    }
+
+    .payment-progress-bar, .victories-progress-bar, .total-athletes-container {
+        margin-top: 20px;
+        width: 94%;
+        padding: 15px;
+    }
+}

@@ -1,0 +1,25 @@
+.update {
+    height: 30px;
+    margin-top: 10px;
+    width: 100px;
+    background-color: #558ca5;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.updated {
+    height: 30px;
+    margin-top: 10px;
+    width: 100px;
+    background-color: #33cf1b;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    color: black;
+}
+
+
+.update:hover {
+    background-color: #7eb4cd;
+}

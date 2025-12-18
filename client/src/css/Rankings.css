@@ -1,0 +1,97 @@
+.rank-container {
+    width: 45%;
+    margin-top: 2rem;
+}
+
+.selection {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+select {
+    background-color: #558ca5;
+    height: 30px;
+    border-radius: 6px;
+    margin-top: 6px;
+    border: none;
+    cursor: pointer;
+    padding: 3px;
+}
+
+.card {
+    background-color: #062433;
+    padding: 21px;
+    height: 55px;
+    margin: 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content:flex-start;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
+.avatar {
+    background-color: #558ca5;
+    height: 45px;
+    width: 45px;
+    display: flex;
+    border-radius: 50%;
+    margin-right: 1rem;
+    justify-content: center;
+    align-items: center;
+    font-size: larger;
+    font-weight: 500;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
+.name {
+    font-weight: 600;
+}
+
+p {
+    padding: 1.5px;
+}
+
+.medal {
+    display: none;
+    height: 35px;
+    margin-right: 5px;
+}
+
+.icons {
+    display: flex;
+    margin-left: auto;
+    align-items: center;
+}
+
+.list .card:first-child .medal{
+    display: block;
+    color: gold;
+}
+
+.list .card:nth-child(2) .medal{
+    display: block;
+    color: silver;
+}
+
+.list .card:nth-child(3) .medal{
+    display: block;
+    color: rgb(217, 168, 7);
+}
+
+.no-data {
+    text-align: center;
+}
+
+@media only screen and (max-width: 800px) {
+    .rank-container {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .content {
+        font-size: small;
+        width: 150px;
+    }
+}

@@ -1,0 +1,19 @@
+.intro-container {
+    display: flex;
+    justify-content: center;
+}
+
+.intro {
+    background-color: #001b29;
+    margin: 20px 0px 20px 0px;
+    width: 50%;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
+@media only screen and (max-width: 500px) {
+    .intro{
+        width: 90%;
+    }
+}
